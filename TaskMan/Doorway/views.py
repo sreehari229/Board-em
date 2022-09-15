@@ -1,9 +1,12 @@
+from http.client import HTTPResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-
+from .models import *
+from .utils import *
+import uuid
 
 def index_page(request):
     data = {
@@ -49,6 +52,12 @@ def signup_page(request):
             myuser.first_name = firstName
             myuser.last_name = lastName
             myuser.save()
+            
+            verification_object = UserEmailVerification.objects.create(
+                user = myuser,
+                email_token = str(uuid.uuid4()),
+            )
+            send_email_token(email, verification_object.email_token)
             return redirect('login')
     
     return render(request, 'Doorway/signup.html', data)
@@ -77,3 +86,20 @@ def login_page(request):
 def logout_user(request):
     logout(request)
     return redirect('login')
+
+
+def email_verification(request, token):
+    try:
+        obj = UserEmailVerification.objects.get(email_token = token)
+        obj.email_is_verified = True
+        obj.save()
+        data = {
+            "message" : "Your email has been verified. Please login and continue."
+        }
+        return render(request, 'Doorway/acc_verified_page.html', data)
+    
+    except Exception as e:
+        data = {
+            "message" : "Invalid Token, Please verifiy your email with the right token."
+        }
+        return render(request, 'Doorway/acc_verified_page.html', data)
