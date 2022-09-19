@@ -1,18 +1,29 @@
 {% extends 'Doorway/base_layout.html' %}
+{% load static %}
 
 {% block signup_page_content %}
 <h1> This is the signup page </h1>
 
-<form method="POST" action="">
+<form id = "mainForm" method="POST" action="">
     {% csrf_token %}
-    <input type="text" name="firstName" placeholder="First Name" />
-    <input type="text" name="lastName" placeholder="Last Name" />
-    <input type="email" name="email" placeholder="Email" />
-    <input type="text" name="username" placeholder="Username" />
-    <input type="password" name="password" placeholder="Password" />
-    <input type="password" name="rePassword" placeholder="Confirm Password" />
-    <input type="checkbox" name="Terms_Conditions"><h2>I agree to terms and Conditions</h2>
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" type="submit" value="submit">                
+    <input id = firstNameIn type="text" name="firstName" placeholder="First Name" />
+    <p id = firstName class="errhide">⛔️ Enter a valid First Name</p><br>
+    <input id = lastNameIn type="text" name="lastName" placeholder="Last Name" />
+    <p id = lastName class="errhide">⛔️ Enter a valid Last Name</p> <br>
+    <input id= "emailIn" type="email" name="email" placeholder="Email" />
+    <p id="email" class="errhide">⛔️ Enter a valid Email</p> <br>
+    <input  id = "usernameIn" type="text" name="username" placeholder="Username" minlength="3" maxlength="12"/>
+    <p id=username class="errhide">⛔️ Not a valid Username (No special Characters)</p> <br>
+    <input id="passwordIn"type="password" name="password" placeholder="Password" /> 
+    <input id = "rePasswordIn" type="password" name="rePassword" placeholder="Confirm Password" />
+    <p id = "password" class="errhide">⛔️ <br>Enter a valid Password between 8 - 20 characters (Ex. HelloWorld$123)  </p><br>
+    <p id = "passwordmis" class="errhide">⛔️ Passwords should match</p><br>
+    <input id ="ternandcon" type="checkbox"  onchange="document.getElementById('submitBtn').disabled = !this.checked;" />
+    <label for="ternandcon">I Agree to the Terms and Conditions </label>
+    <br><br>
+    <input id = "submitBtn" type="submit" value="Submit" disabled>
 </form>
+    
+<script src="{% static 'Doorway/Scripts/app.js' %}"></script>
 
 {% endblock signup_page_content %}

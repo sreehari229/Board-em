@@ -31,6 +31,7 @@ def signup_page(request):
             username = request.POST.get('username')
             password = request.POST.get('password')
             rePassword = request.POST.get('rePassword')
+            print(firstName,lastName,email,username)
 
             if User.objects.filter(username=username):
                 #messages.error(request, "Username already exists! Please try other username")

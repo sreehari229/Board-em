@@ -5,6 +5,7 @@
   {% csrf_token %}
   <input type="text" placeholder="Username" name="username" />
   <input type="password" placeholder="Password" name="password" />
-  <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" type="submit" />
+  <a href="{% url 'password_reset' %}">Forgot Password</a>
+  <input type="submit" value="Submit">
 </form>
 {% endblock login_page_content %}
