@@ -2,28 +2,51 @@
 {% load static %}
 
 {% block signup_page_content %}
-<h1> This is the signup page </h1>
-
-<form id = "mainForm" method="POST" action="">
-    {% csrf_token %}
-    <input id = firstNameIn type="text" name="firstName" placeholder="First Name" />
-    <p id = firstName class="errhide">⛔️ Enter a valid First Name</p><br>
-    <input id = lastNameIn type="text" name="lastName" placeholder="Last Name" />
-    <p id = lastName class="errhide">⛔️ Enter a valid Last Name</p> <br>
-    <input id= "emailIn" type="email" name="email" placeholder="Email" />
-    <p id="email" class="errhide">⛔️ Enter a valid Email</p> <br>
-    <input  id = "usernameIn" type="text" name="username" placeholder="Username" minlength="3" maxlength="12"/>
-    <p id=username class="errhide">⛔️ Not a valid Username (No special Characters)</p> <br>
-    <input id="passwordIn"type="password" name="password" placeholder="Password" /> 
-    <input id = "rePasswordIn" type="password" name="rePassword" placeholder="Confirm Password" />
-    <p id = "password" class="errhide">⛔️ <br>Enter a valid Password between 8 - 20 characters (Ex. HelloWorld$123)  </p><br>
-    <p id = "passwordmis" class="errhide">⛔️ Passwords should match</p><br>
-    <input id ="ternandcon" type="checkbox"  onchange="document.getElementById('submitBtn').disabled = !this.checked;" />
-    <label for="ternandcon">I Agree to the Terms and Conditions </label>
-    <br><br>
-    <input id = "submitBtn" type="submit" value="Submit" disabled>
-</form>
+<div class="col-12 container p-6 shadow mb-5 bg-body rounded">
+    <section class="row rounded border p-0 ">
+        <div class="d_left col-lg-6 p-0 mx-0 bg-secondary" >
+            <img src="{% static 'images/b.jpg' %}" alt="loading" width="100%" height="500px" class="rounded">          
+        </div>
+        <div class="d_right col-lg-6 bg-light">
+            
+            <div class="cont_text  p-0 ">
+                <h1 class=" col-12 fs-3 fw-bolder bg-light-blue align-items-center">SignUp </h1>
+                
+              </div> 
+              
+            <div class="col-12 form_box w-75 h-80 border-success">
+                <form id = "mainForm" method="POST" action="" class=" ms-4" onsubmit="return validateform()">
+                    {% csrf_token %}
+                    <div class="name">
+                        <div class="f_name p-1">
+                            <input id = firstNameIn type="text" name="firstName" placeholder="First Name" class="form-control p-0 w-100 " />
+                            <p id = firstName class="errhide text-danger" style="font-size:80%">⛔️ Enter a valid First Name</p><br>
+                            </div>
+                            <div class="l_name p-1 ">
+                                <input id = lastNameIn type="text" name="lastName" placeholder="Last Name" class="form-control p-0 w-100 " />
+                                <p id = lastName class="errhide text-danger" style="font-size:80%">⛔️ Enter a valid Last Name</p> <br>
+                            </div>
+                    </div><br>
+                    <input id= "emailIn" type="email" name="email" placeholder="Email" class="form-control w-40 p-0" />
+                    <p id="email" class="errhide text-danger" style="font-size:80%">⛔️ Enter a valid Email</p> <br>
+                    <input  id = "usernameIn" type="text" name="username" placeholder="Username" class="form-control  p-0"/>
+                    <p id=username class="errhide text-danger" style="font-size:80%">⛔️ Not a valid Username (No special Characters)</p> <br>
+                    <input id="passwordIn"type="password" name="password" placeholder="Password" class="form-control p-0 mb-2 "/>
+                    <p id = "password" class="errhide text-danger" style="font-size:74%">⛔️Enter a valid Password between 8 - 20 characters (Ex. HelloWorld$123)  </p>
+                    <input id = "rePasswordIn" type="password" name="rePassword" placeholder="Confirm Password" class="form-control p-0 mt-4"/>
+                    <p id = "passwordmis" class="errhide text-danger" style="font-size:80%">⛔️ Passwords should match</p><br>
+                    <input id ="ternandcon" type="checkbox"  onchange="document.getElementById('submit').disabled = !this.checked;" />
+                    <label for="ternandcon">I Agree to the Terms and Conditions </label>
+                    <br><br>
+                    <input class="btn btn-dark" id="submit" type="submit" value="Submit" disabled>
+                </form>
+            </div>
+        </div>
+        
+            
+        </section>
+    </div>
     
-<script src="{% static 'Doorway/Scripts/app.js' %}"></script>
+<script src="{% static 'Doorway/Scripts/signup_validations.js' %}"></script>
 
 {% endblock signup_page_content %}
