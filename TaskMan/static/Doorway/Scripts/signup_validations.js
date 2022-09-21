@@ -1,4 +1,4 @@
-const regName = /^[a-zA-Z ]{2,30}$/;
+const regName = /^[a-zA-Z ]{1,30}$/;
 const regEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 const regUserName = /^[a-zA-Z]+[a-zA-Z0-9_@+.]{2,16}$/
 const regPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{8,20}$/
@@ -21,61 +21,61 @@ const userNameErr = document.getElementById('username')
 const passErr = document.getElementById('password')
 const passMissErr = document.getElementById('passwordmis')
 
-let checkError = false;
+let checkError = [false];
 
 
 mainForm.addEventListener('submit', (e) => {
 	e.preventDefault();
     
 
-    checkError = regName.test(firstName.value.trim())
+    checkError[0] = regName.test(firstName.value.trim())
     
-    if(!checkError){
+    if(!checkError[0]){
         firstNameErr.classList.add('errshow');
     }
     else{
         firstNameErr.classList.remove('errshow');
     }
     
-    checkError = regName.test(lastName.value.trim())
+    checkError[1] = regName.test(lastName.value.trim())
     
-    if(!checkError){
+    if(!checkError[1]){
         lastNameErr.classList.add('errshow')
     }
     else{
         lastNameErr.classList.remove('errshow')
     }
 
-    checkError = regEmail.test(email.value);
+    checkError[2] = regEmail.test(email.value);
     
-    if(!checkError){
+    if(!checkError[2]){
         emailErr.classList.add('errshow')
     }
     else{
         emailErr.classList.remove('errshow')
     }
 
-    checkError = regUserName.test(username.value)
+    checkError[3] = regUserName.test(username.value)
 
 
-    if(!checkError){
+    if(!checkError[3]){
         userNameErr.classList.add('errshow')
     }
     else{
         userNameErr.classList.remove('errshow')
     }
 
-    password.value === rePassword.value? checkError = true : checkError = false;
+    password.value === rePassword.value? checkError[4] = true : checkError[4] = false;
 
-    if(!checkError){
+    if(!checkError[4]){
         passMissErr.classList.add('errshow')
         }
 
     else{
         passMissErr.classList.remove('errshow')
-        checkError = regPassword.test(password.value)
+        checkError[4] = regPassword.test(password.value)
         
-        if(!checkError){
+        if(!checkError[4]){
             passErr.classList.add('errshow')
         }
     
@@ -85,10 +85,9 @@ mainForm.addEventListener('submit', (e) => {
     }
 
 
-    if(checkError){
+    if(checkError.every(value => value === true)){
         console.log("no error")
         mainForm.submit();
-        // mainForm.submit.disabled = true;
     }
     
     });
