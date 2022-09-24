@@ -7,3 +7,10 @@ def acc_index_page(request):
         
     }
     return render(request, 'Intendance/acc_home.html', data)
+
+@login_required(login_url='login')
+def profile_page(request):
+    data = {
+        
+    }
+    return render(request, 'Intendance/profile_page.html', data)
