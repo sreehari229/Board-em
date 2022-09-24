@@ -3,16 +3,17 @@
 {% block profile %}
     <h1> Profile Pafe </h1>
     <h3>Username : {{ user.username }} </h3>
-    <h3>First Name : {{ user.firstname }}</h3>
-    <h3>Last Name : {{ user.last_name }}</h3>
     <h3>Email : {{ user.email }}</h3>
     <h3>Last Login : {{ user.last_login }}</h3>
     <h3>Date Joined : {{ user.date_joined }}
-    <h3>Bio : {{ user.profile.bio }}</h3>
-    <h3>Company : {{ user.profile.company }}</h3>
-    <h3>City : {{ user.profile.city }}</h3>
-    <h3>Website : {{ user.profile.website_link }}</h3>
-    <h3>Github : {{ user.profile.github_link }}</h3>
-    <h3>Date of Birth : {{ user.profile.date_of_birth }}</h3>
     <img src="{{ user.profile.image.url }}" width="500px" height="500px"> 
+    
+    <br><h1>For Update</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ u_form.as_p }}
+        {{ p_form.as_p }}
+        <input type="submit" value="Update" />
+    </form>
+
 {% endblock profile %}
