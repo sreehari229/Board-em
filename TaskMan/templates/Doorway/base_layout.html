@@ -11,32 +11,17 @@
     <title>SignUp</title>
 </head>
 <body class="bg-success p-2 bg-opacity-25" style="background-image: url(images/bg_img.jpg);" >
-<header class="_head p-3 ">
-    <div class="container">
-        
-        <div class="col-12 d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-          <div class="col-5 logo ms-0 me-5">
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-              <img src="{% static 'images/logo.jpeg' %}" width="180" height="50" >
-            </a>
-          </div>
-          
-          <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">Profile</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">About </a></li>
-            <li><a href="#" class="nav-link px-2 text-white">Create</a></li>
-          </ul>
 
-  
-          <div class="text-end">
-            <button type="button" class="btn btn-outline-light me-2" onclick="location.href = {% url 'login' %}">Login</button>
-            <button type="button" class="btn btn-light" onclick="location.href = {% url 'signup' %}">Sign-up</button>
-          </div>
-        </div>
-      </div>
-</header>
-    
+ {% include 'Doorway/navbar.html' %}
+
+ <!--    Alert Messages code. Change CSS for it or add bootstrap dismissible alerts        -->
+  {% if messages %}
+    {% for message in messages %}
+      <h1>{{ message }}</h1>
+    {% endfor %}
+  {% endif %}
+  <!--  End of the code -->
+
   {% block index_page_content %}
   {% endblock index_page_content %}
   
@@ -46,9 +31,7 @@
   {% block signup_page_content %}
   {% endblock signup_page_content %}
 
-  {% block account_verify_block %}
-  {% endblock account_verify_block %}
-  
+
   <footer class="f_div py-3 m-0 ">
     <ul class="nav justify-content-center border-bottom pb-4 ">
       <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>

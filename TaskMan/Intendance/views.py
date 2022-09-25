@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .forms import UserUpdateForm, ProfileUpdateForm
 
 @login_required(login_url='login')
@@ -17,7 +18,7 @@ def profile_page(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            #Show some notification - Your account has been updated
+            messages.success(request, "Your profile has been updated.")
             return redirect('profile')
         
     else:

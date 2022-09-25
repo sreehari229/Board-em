@@ -4,6 +4,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .models import *
 from .utils import *
 import uuid
@@ -34,19 +35,15 @@ def signup_page(request):
             print(firstName,lastName,email,username)
 
             if User.objects.filter(username=username):
-                #messages.error(request, "Username already exists! Please try other username")
+                messages.error(request, "Username already exists! Please try other username")
                 return redirect('signup')
 
             if User.objects.filter(email=email):
-                #messages.error(request, "Email already exists! Try again with a different email")
+                messages.error(request, "Email already exists! Try again with a different email")
                 return redirect('signup')
 
             if len(username) > 25:
-                #messages.error(request, "Length of username is greater than 25 characters.")
-                return redirect('signup')
-
-            if password != rePassword:
-                #messages.error(request, "Password does not match!")
+                messages.error(request, "Length of username is greater than 25 characters.")
                 return redirect('signup')
 
             myuser = User.objects.create_user(username, email, password)
@@ -59,6 +56,7 @@ def signup_page(request):
                 email_token = str(uuid.uuid4()),
             )
             send_email_token(email, verification_object.email_token)
+            messages.info(request, f"An email has been sent to {email}, please verify your email.")
             return redirect('login')
     
     return render(request, 'Doorway/signup.html', data)
@@ -73,15 +71,14 @@ def login_page(request):
             
             user = authenticate(request, username=username, password=password)
             if user is not None:
+                #Add a condition for email verification. Only if email is verified user will be able to login.
                 login(request, user)
                 return redirect('acc-page')
             else:
-                #Send a flash message/ notification saying Username/Password is incorrect
-                pass
-        data = {
+                messages.error(request, "Username/Password is incorrect. Please type in the correct credentials to login.")
+                return redirect('login')
             
-        }
-        return render(request, 'Doorway/login_page.html', data)
+        return render(request, 'Doorway/login_page.html')
 
 @login_required(login_url='login')
 def logout_user(request):
@@ -94,13 +91,9 @@ def email_verification(request, token):
         obj = UserEmailVerification.objects.get(email_token = token)
         obj.email_is_verified = True
         obj.save()
-        data = {
-            "message" : "Your email has been verified. Please login and continue."
-        }
-        return render(request, 'Doorway/acc_verified_page.html', data)
+        messages.success(request, "Your email has been verified. Please login and continue.")
+        return redirect('login')
     
     except Exception as e:
-        data = {
-            "message" : "Invalid Token, Please verifiy your email with the right token."
-        }
-        return render(request, 'Doorway/acc_verified_page.html', data)
+        messages.error(request, "Invalid token, please verify using the right token.")
+        return redirect('login')
