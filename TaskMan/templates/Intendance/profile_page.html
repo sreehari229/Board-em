@@ -1,4 +1,5 @@
 {% extends 'Intendance/base_layout.html' %}
+{% load widget_tweaks %}
 
 {% block profile %}
     <h1> Profile Pafe </h1>
@@ -11,9 +12,26 @@
     <br><h1>For Update</h1>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ u_form.as_p }}
-        {{ p_form.as_p }}
-        <input type="submit" value="Update" />
+        <h5> First Name: </h5>
+        {% render_field u_form.first_name class="input_trial trial_class_css" placeholder="Hello" %}
+        <h5> Last Name: </h5>
+        {% render_field u_form.last_name %}
+        <h5> Bio: </h5>
+        {% render_field p_form.bio %}
+        <h5> Company: </h5>
+        {% render_field p_form.company %}
+        <h5> City: </h5>
+        {% render_field p_form.city %}
+        <h5> Website Link: </h5>
+        {% render_field p_form.website_link %}
+        <h5> Github Link: </h5>
+        {% render_field p_form.github_link %}
+        <h5> Profile Picture: </h5>
+        {% render_field p_form.image %}
+        <h5> Date of Birth: </h5>
+        {% render_field p_form.date_of_birth %}
+
+        <input type="submit" value="Update Profile" />
     </form>
 
 {% endblock profile %}

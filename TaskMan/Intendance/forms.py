@@ -8,7 +8,7 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name','last_name']
-        widgets = {
+        """widgets = {
             'first_name' : forms.TextInput(attrs={
                  'class': "trial_class_css",
                 'style': 'max-width: 300px;',
@@ -19,7 +19,7 @@ class UserUpdateForm(forms.ModelForm):
                 'style': 'max-width: 300px;',
                 'placeholder': 'Last Name',
                 }),
-        }
+        }"""
         
 
 class ProfileUpdateForm(forms.ModelForm):

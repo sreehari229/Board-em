@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Doorway',
     'Intendance',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
