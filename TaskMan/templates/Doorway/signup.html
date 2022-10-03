@@ -5,15 +5,15 @@
 <div class="col-12 container p-6 shadow mb-5 bg-body rounded">
     <section class="row rounded border p-0 ">
         <div class="d_left col-lg-6 p-0 mx-0 bg-secondary" >
-            <img src="{% static 'images/b.jpg' %}" alt="loading" width="100%" height="500px" class="rounded">          
+            <img src="{% static 'images/b.jpg' %}" alt="loading" width="100%" height="500px" class="rounded">
         </div>
         <div class="d_right col-lg-6 bg-light">
-            
+
             <div class="cont_text  p-0 ">
                 <h1 class=" col-12 fs-3 fw-bolder bg-light-blue align-items-center">SignUp </h1>
-                
-              </div> 
-              
+
+              </div>
+
             <div class="col-12 form_box w-75 h-80 border-success">
                 <form id = "mainForm" method="POST" action="" class=" ms-4" onsubmit="return validateform()">
                     {% csrf_token %}
@@ -38,15 +38,15 @@
                     <input id ="ternandcon" type="checkbox"  onchange="document.getElementById('submitBtn').disabled = !this.checked;" />
                     <label for="ternandcon">I Agree to the Terms and Conditions </label>
                     <br><br>
-                    <input class="btn btn-dark" id="submitBtn" type="submit" value="Submit" disabled>
+                   <input class="btn btn-dark" id="submitBtn" style="margin-left:170px" type="submit" value="Submit" disabled>
                 </form>
             </div>
         </div>
-        
-            
+
+
         </section>
     </div>
-    
+
 <script src="{% static 'Doorway/Scripts/signup_validations.js' %}"></script>
 
 {% endblock signup_page_content %}
