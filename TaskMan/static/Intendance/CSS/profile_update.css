@@ -1,0 +1,13 @@
+.trial_class_css {
+    border:2px solid #aaa;
+    border-radius:4px;
+    margin:8px 0;
+    outline:none;
+    padding:8px;
+    box-sizing:border-box;
+    transition:.3s;
+}
+
+.input_trial{
+    width:100%;
+}

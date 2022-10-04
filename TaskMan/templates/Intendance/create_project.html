@@ -1,0 +1,47 @@
+{% extends 'Intendance/base_layout.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block create_project_content %}
+<div class="container-sm" style="width:900px">
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="exampleFormControlInput1">Name</label>
+      {% render_field form.name class="form-control" placeholder="Name" %}
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlSelect1">Description</label>
+        {% render_field form.description class="form-control" placeholder="Description" %}
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Project URL</label>
+        {% render_field form.url class="form-control" placeholder="Project URL" %}
+      </div>
+      <div class="form-group" style="height:150px;overflow-y: scroll;">
+        <label for="exampleFormControlInput1">Group Members</label>
+        {% for foruser in users %}
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" name="{{ foruser.username }}" value="{{ foruser.id }}">
+          <label class="form-check-label">{{ foruser.username }}</label>
+        </div>
+        {% endfor %}
+        
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Start Date</label>
+        {% render_field form.start_date class="form-control" placeholder="Start Date" type="date" %}
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Duration</label>
+        {% render_field form.duration class="form-control" placeholder="Duration" %}
+      </div>
+      
+      <br>
+        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Create Project" />
+        
+      
+  </form>
+</div>
+
+{% endblock create_project_content %}

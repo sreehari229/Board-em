@@ -1,14 +1,9 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body>
-  <h1 class="text-3xl font-bold underline">
-    This is the Home Page 
-  </h1>
-  <h3> Consist of project name, details and description, team members and other details </h3>
-</body>
-</html>
+{% extends 'Doorway/base_layout.html' %}
+
+{% block index_page_content %}
+<h1 class="text-3xl font-bold underline">
+  This is the Home Page 
+</h1>
+
+<h3> Consist of project name, details and description, team members and other details </h3>
+{% endblock index_page_content %}

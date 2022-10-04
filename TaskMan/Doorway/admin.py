@@ -1,3 +1,4 @@
 from django.contrib import admin
+from Doorway.models import UserEmailVerification
 
-# Register your models here.
+admin.site.register(UserEmailVerification)
