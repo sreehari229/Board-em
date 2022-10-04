@@ -3,36 +3,186 @@
 {% load static %}
 
 {% block profile %}
-    <h1> Profile Pag e </h1>
-    <h3>Username : {{ user.username }} </h3>
-    <h3>Email : {{ user.email }}</h3>
-    <h3>Last Login : {{ user.last_login }}</h3>
-    <h3>Date Joined : {{ user.date_joined }}
-    <img src="{{ user.profile.image.url }}" width="500px" height="500px"> 
-    
-    <br><h1>For Update</h1>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <h5> First Name: </h5>
-        {% render_field u_form.first_name class="input_trial trial_class_css" placeholder="Hello" %}
-        <h5> Last Name: </h5>
-        {% render_field u_form.last_name %}
-        <h5> Bio: </h5>
-        {% render_field p_form.bio %}
-        <h5> Company: </h5>
-        {% render_field p_form.company %}
-        <h5> City: </h5>
-        {% render_field p_form.city %}
-        <h5> Website Link: </h5>
-        {% render_field p_form.website_link %}
-        <h5> Github Link: </h5>
-        {% render_field p_form.github_link %}
-        <h5> Profile Picture: </h5>
-        {% render_field p_form.image %}
-        <h5> Date of Birth: </h5>
-        {% render_field p_form.date_of_birth %}
+    <section style="background-color: #eee;">
+        <div class="container py-5">
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="card mb-4">
+                <div class="card-body text-center">
+                  <img src="{{ user.profile.image.url }}" alt="Profile Picture"
+                    class="rounded-circle img-fluid" style="width: 150px;">
+                  <h5 class="my-3">{{ user.first_name }} {{ user.last_name }}</h5>
+                  <p class="text-muted mb-1">{{ user.profile.bio }}</p>
+                  <p class="text-muted mb-4">{{ user.profile.city }}</p>
+                  
+                </div>
+              </div>
+              <div class="card mb-4 mb-lg-0">
+                <div class="card-body p-0">
+                  <ul class="list-group list-group-flush rounded-3">
+                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                      <i class="fas fa-globe fa-lg text-warning"></i>
+                      <p class="mb-0">https://mdbootstrap.com</p>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                      <i class="fab fa-github fa-lg" style="color: #333333;"></i>
+                      <p class="mb-0">mdbootstrap</p>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                      <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
+                      <p class="mb-0">@mdbootstrap</p>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                      <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
+                      <p class="mb-0">mdbootstrap</p>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                      <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
+                      <p class="mb-0">mdbootstrap</p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8">
+              <div class="card mb-4">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Username</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{{ user.username }}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Email</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{{ user.email }}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Date Joined</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{{ user.date_joined }}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Last Login</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{{ user.last_login }}</p>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
 
-        <input type="submit" value="Update Profile" />
-    </form>
+              <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+              <div class="card mb-4">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">First Name</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{% render_field u_form.first_name class="form-control" placeholder="First Name" %}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Last Name</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{% render_field u_form.last_name class="form-control" placeholder="Last Name" %}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Date of Birth</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{% render_field p_form.date_of_birth class="form-control" placeholder="Date of Birth" type="date" %}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Bio</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{% render_field p_form.bio class="form-control" placeholder="Bio" %}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Company</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{% render_field p_form.company class="form-control" placeholder="Company" %}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Website</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{% render_field p_form.website_link class="form-control" placeholder="URL for Website" %}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Github</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{% render_field p_form.github_link class="form-control" placeholder="URL for Github" %}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Profile Picture</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{% render_field p_form.image class="form-control" %}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">City</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{% render_field p_form.city class="form-control" placeholder="City" %}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="d-flex justify-content-center mb-2">
+                    <input type="submit" class="btn btn-primary" />
+                  </div>
+                </div>
+              </div>
+           
+            </form>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
 {% endblock profile %}

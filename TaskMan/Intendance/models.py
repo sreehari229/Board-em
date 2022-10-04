@@ -35,7 +35,8 @@ class Project(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     url = models.URLField(null=True, blank=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    group_members = models.ManyToManyField(User, blank=True, related_name="group_members")
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="project_owner")
     created_date = models.DateField(auto_now_add=True)
     start_date = models.DateField()
     duration = models.IntegerField()
@@ -43,16 +44,6 @@ class Project(models.Model):
     
     def __str__(self):
         return f'{self.project_id} - {self.name}'
-    
-
-class Project_Group(models.Model):
-    project_id = models.OneToOneField(Project, on_delete=models.CASCADE)
-    group_members = models.ManyToManyField(User, blank=True)
-    created_date = models.DateField(auto_now_add=True)
-    modified_date = models.DateField(auto_now=True)
-    
-    def __str__(self):
-        return f'{self.project_id}'
     
 
 class Task(models.Model):

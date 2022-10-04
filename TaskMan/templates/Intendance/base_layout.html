@@ -9,18 +9,19 @@
   </head>
 </head>
 <body>
-    <br>
+    
     {% include 'Intendance/account_navbar.html' %}
     {% include 'Intendance/alert_message.html' %}
-    <br>
-
-    <h1>Hello, {{ request.user }}</h1>
+    
     
     {% block acc_index_page_content %}
     {% endblock acc_index_page_content %}
 
     {% block profile %}
     {% endblock profile %}
+
+    {% block create_project_content %}
+    {% endblock create_project_content %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 </body>

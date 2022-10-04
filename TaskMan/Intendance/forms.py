@@ -1,7 +1,7 @@
 from tkinter import Widget
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Project
 
 
 class UserUpdateForm(forms.ModelForm):
@@ -26,3 +26,9 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['bio', 'company', 'city', 'website_link', 'github_link', 'image', 'date_of_birth']
+
+        
+class CreateProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = '__all__'
