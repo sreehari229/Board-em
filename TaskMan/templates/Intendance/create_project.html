@@ -21,10 +21,12 @@
       <div class="form-group" style="height:150px;overflow-y: scroll;">
         <label for="exampleFormControlInput1">Group Members</label>
         {% for foruser in users %}
+        {% if foruser != request.user %}
         <div class="form-check">
           <input type="checkbox" class="form-check-input" name="{{ foruser.username }}" value="{{ foruser.id }}">
           <label class="form-check-label">{{ foruser.username }}</label>
         </div>
+        {% endif %}
         {% endfor %}
         
       </div>

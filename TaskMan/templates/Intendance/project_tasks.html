@@ -1,0 +1,89 @@
+{% extends 'Intendance/base_layout.html' %}
+{% load static %}
+
+{% block project_task_content %}
+<div class="container">
+  <div class="d-flex flex-row-reverse">
+    <div class="p-2">
+    <a class="btn btn-primary btn-lg btn-block" href="{% url 'create-task' project_data.project_id %}">Create Task</a>
+  </div>
+  </div>
+    <div class="row">
+        <div class="col-sm">
+            <h3>To-do</h3>
+            {% for tskdt in task_data %}
+            {% if tskdt.task_status == 'todo' %}
+            <div class="card" style="width: 18rem;margin-top:10px">
+                <div class="card-body">
+                  <h5 class="card-title">{{ tskdt.title }}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">Created By - {{ tskdt.created_by }}</h6>
+                  <p class="card-text">{{ tskdt.description }}</p>
+                  {% if tskdt.created_by == request.user or project_data.created_by == request.user %}
+                  <a href="#" class="card-link">Edit</a>
+                  <a href="#" class="card-link">Delete</a>
+                  {% endif %}
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}
+        </div>
+        <div class="col-sm">
+            <h3>In Progress</h3>
+            {% for tskdt in task_data %}
+            {% if tskdt.task_status == 'inprogress' %}
+            <div class="card" style="width: 18rem;margin-top:10px">
+                <div class="card-body">
+                  <h5 class="card-title">{{ tskdt.title }}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">Created By - {{ tskdt.created_by }}</h6>
+                  <p class="card-text">{{ tskdt.description }}</p>
+                  {% if tskdt.created_by == request.user or project_data.created_by == request.user %}
+                  <a href="#" class="card-link">Edit</a>
+                  <a href="#" class="card-link">Delete</a>
+                  {% endif %}
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}
+        </div>
+        <div class="col-sm">
+            <h3>Testing</h3>
+            {% for tskdt in task_data %}
+            {% if tskdt.task_status == 'testing' %}
+            <div class="card" style="width: 18rem;margin-top:10px">
+                <div class="card-body">
+                  <h5 class="card-title">{{ tskdt.title }}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">Created By - {{ tskdt.created_by }}</h6>
+                  <p class="card-text">{{ tskdt.description }}</p>
+                  {% if tskdt.created_by == request.user or project_data.created_by == request.user %}
+                  <a href="#" class="card-link">Edit</a>
+                  <a href="#" class="card-link">Delete</a>
+                  {% endif %}
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}
+          </div>
+          <div class="col-sm">
+            <h3>Completed</h3>
+            {% for tskdt in task_data %}
+            {% if tskdt.task_status == 'completed' %}
+            <div class="card" style="width: 18rem;margin-top:10px">
+                <div class="card-body">
+                  <h5 class="card-title">{{ tskdt.title }}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">Created By - {{ tskdt.created_by }}</h6>
+                  <p class="card-text">{{ tskdt.description }}</p>
+                  {% if tskdt.created_by == request.user or project_data.created_by == request.user %}
+                  <a href="#" class="card-link">Edit</a>
+                  <a href="#" class="card-link">Delete</a>
+                  {% endif %}
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}
+          </div>
+        
+      </div>
+    </div>
+
+
+{% endblock project_task_content %}

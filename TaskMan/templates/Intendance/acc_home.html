@@ -4,12 +4,32 @@
 
 
 
-<div class="container">
-    <h6> Logged in user ;Index page for logged in users. Blah </h6>
-    <a href="{% url 'create-project' %}" class="btn btn-primary">Create Project</a>
+<div class="container" style="margin:50px">
+    <a href="{% url 'create-project' %}" class="btn btn-primary btn-lg btn-block" style="width:inherit;">Create Project</a>
+    <table class="table table-striped bg-light">
+      <thead>
+        <tr>
+          <th scope="col">Name of the project</th>
+          <th scope="col">Project Owner</th>
+          <th scope="col">Created Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for prodata in projects_data %}
+          <tr>
+            <td><a href='{% url 'project-tasks' prodata.project_id %}'> {{ prodata.name }}</a></td>
+            <td>{{ prodata.created_by }}</td>
+            <td>{{ prodata.created_date }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    
 </div>
 
-<div class="container-sm">
+
+
+{% comment %} <div class="container-sm">
 <div class="card">
     <h5 class="card-header">Invites</h5>
     
@@ -21,5 +41,5 @@
     </div>
     
   </div>
-</div>
+</div> {% endcomment %}
 {% endblock acc_index_page_content %}

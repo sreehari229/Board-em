@@ -8,7 +8,7 @@ from .models import *
 @login_required(login_url='login')
 def acc_index_page(request):
     data = {
-        
+        'projects_data' : Project.objects.filter(group_members=request.user),    
     }
     return render(request, 'Intendance/acc_home.html', data)
 
@@ -33,17 +33,6 @@ def profile_page(request):
     }
     return render(request, 'Intendance/profile_page.html', data)
 
-
-# project_id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
-#     name = models.CharField(max_length=200)
-#     description = models.TextField(null=True, blank=True)
-#     url = models.URLField(null=True, blank=True)
-#     group_members = models.ManyToManyField(User, blank=True, related_name="group_members")
-#     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="project_owner")
-#     created_date = models.DateField(auto_now_add=True)
-#     start_date = models.DateField()
-#     duration = models.IntegerField()
-#     modified_date = models.DateField(auto_now=True)
 
 @login_required(login_url='login')
 def create_project_page(request):
@@ -70,13 +59,34 @@ def create_project_page(request):
         user_id = []
         for x in user_usernames:
             user_id.append(int(request.POST.get(x))) if request.POST.get(x) else print("Nothing")
-        print(user_id)
         for pkid in user_id:
             print(pkid)
             pj.group_members.add(User.objects.get(id=pkid))
+        pj.group_members.add(request.user)
+        messages.success(request, f"Project created - {name}")
+        return redirect('acc-page')
             
     data = {
         'form' : form,
         'users' : User.objects.all()
     }
     return render(request, 'Intendance/create_project.html', data)
+
+
+@login_required(login_url='login')
+def project_tasks_page(request, pk):
+    data = {
+        'task_data' : Task.objects.filter(project=pk),
+        'project_data' : Project.objects.get(project_id=pk),
+    }
+    return render(request, 'Intendance/project_tasks.html', data)
+
+
+@login_required(login_url='login')
+def create_task_page(request, project_id):
+    form = CreateTaskForm()
+    print("---------------> ",project_id)
+    data = {
+        'form':form,
+    }
+    return render(request, "Intendance/create_task.html" ,data)

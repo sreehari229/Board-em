@@ -1,0 +1,38 @@
+{% extends 'Intendance/base_layout.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block create_task_content %}
+<div class="container">
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="col-7 my-3">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">Title</div>
+          </div>
+          {% render_field form.title class="form-control" %}      
+        </div>
+    </div>
+
+    <div class="col-7 my-3">
+      <div class="input-group-prepend">
+        <div class="input-group-text">Description</div>
+      </div>
+    {% render_field form.description class="form-control" %}
+    </div>
+
+    <div class="col-7 my-3">
+        <div class="input-group">      
+        {% render_field form.task_status class="form-select  mb-3" %}
+            <div class="input-group-prepend ">
+                <div class="input-group-text">Task Status</div>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button>
+
+</form>
+</div>
+{% endblock create_task_content %}
