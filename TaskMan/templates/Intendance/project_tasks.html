@@ -19,7 +19,7 @@
                   <h6 class="card-subtitle mb-2 text-muted">Created By - {{ tskdt.created_by }}</h6>
                   <p class="card-text">{{ tskdt.description }}</p>
                   {% if tskdt.created_by == request.user or project_data.created_by == request.user %}
-                  <a href="#" class="card-link">Edit</a>
+                  <a href="{% url 'update-task' tskdt.task_id %}" class="card-link">Edit</a>
                   <a href="#" class="card-link">Delete</a>
                   {% endif %}
                 </div>
@@ -37,7 +37,7 @@
                   <h6 class="card-subtitle mb-2 text-muted">Created By - {{ tskdt.created_by }}</h6>
                   <p class="card-text">{{ tskdt.description }}</p>
                   {% if tskdt.created_by == request.user or project_data.created_by == request.user %}
-                  <a href="#" class="card-link">Edit</a>
+                  <a href="{% url 'update-task' tskdt.task_id %}" class="card-link">Edit</a>
                   <a href="#" class="card-link">Delete</a>
                   {% endif %}
                 </div>
@@ -55,7 +55,7 @@
                   <h6 class="card-subtitle mb-2 text-muted">Created By - {{ tskdt.created_by }}</h6>
                   <p class="card-text">{{ tskdt.description }}</p>
                   {% if tskdt.created_by == request.user or project_data.created_by == request.user %}
-                  <a href="#" class="card-link">Edit</a>
+                  <a href="{% url 'update-task' tskdt.task_id %}" class="card-link">Edit</a>
                   <a href="#" class="card-link">Delete</a>
                   {% endif %}
                 </div>
@@ -73,7 +73,7 @@
                   <h6 class="card-subtitle mb-2 text-muted">Created By - {{ tskdt.created_by }}</h6>
                   <p class="card-text">{{ tskdt.description }}</p>
                   {% if tskdt.created_by == request.user or project_data.created_by == request.user %}
-                  <a href="#" class="card-link">Edit</a>
+                  <a href="{% url 'update-task' tskdt.task_id %}" class="card-link">Edit</a>
                   <a href="#" class="card-link">Delete</a>
                   {% endif %}
                 </div>

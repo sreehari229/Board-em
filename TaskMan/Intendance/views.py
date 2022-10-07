@@ -1,3 +1,4 @@
+from turtle import title
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -46,6 +47,7 @@ def create_project_page(request):
         sd = request.POST.get('start_date')
         dura = request.POST.get('duration')
         usr = request.user
+
         print(name, descript, url, gm , sd, dura, usr)
         pj = Project.objects.create(
             name=name,
@@ -70,7 +72,7 @@ def create_project_page(request):
         'form' : form,
         'users' : User.objects.all()
     }
-    return render(request, 'Intendance/create_project.html', data)
+    return render(request, 'Intendance/project_CRUD.html', data)
 
 
 @login_required(login_url='login')
@@ -84,9 +86,46 @@ def project_tasks_page(request, pk):
 
 @login_required(login_url='login')
 def create_task_page(request, project_id):
-    form = CreateTaskForm()
+    form = TaskFormCRUD()
     print("---------------> ",project_id)
+    if request.method == "POST":
+        print("Create Task -------------: ")
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        task_status = request.POST.get('task_status')
+        print(f"Title ---> {title}")
+        print(f"Description ---> {description}")
+        print(f"Task Status ---> {task_status}")
+        project = Project.objects.get(project_id=project_id)
+        task = Task.objects.create(
+            project=project,
+            title=title,
+            description=description,
+            task_status=task_status,
+            created_by=request.user,
+        )
+        messages.success(request, f"Task created - {title}")
+        return redirect("project-tasks", pk=project.project_id)
+        
     data = {
         'form':form,
     }
-    return render(request, "Intendance/create_task.html" ,data)
+    return render(request, "Intendance/task_CRUD.html" ,data)
+
+@login_required(login_url='login')
+def update_task_page(request, task_id):
+    task = Task.objects.get(task_id=task_id)
+    form = TaskFormCRUD(instance=task)
+    if request.method == "POST":
+        form = TaskFormCRUD(request.POST, instance=task)
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        task_status = request.POST.get('task_status')
+        Task.objects.filter(task_id=task_id).update(title=title, description=description, task_status=task_status)
+        messages.success(request, f"Task updated")
+        return redirect('project-tasks', pk=task.project.project_id)
+
+    data = {
+        'form':form,
+    }
+    return render(request, "Intendance/task_CRUD.html", data)

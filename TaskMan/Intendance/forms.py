@@ -33,7 +33,7 @@ class CreateProjectForm(forms.ModelForm):
         model = Project
         fields = '__all__'
         
-class CreateTaskForm(forms.ModelForm):
+class TaskFormCRUD(forms.ModelForm):
     class Meta:
         model = Task
         fields = '__all__'
