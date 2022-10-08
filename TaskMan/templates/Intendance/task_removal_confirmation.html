@@ -1,0 +1,27 @@
+{% extends 'Intendance/base_layout.html' %}
+
+{% block delete_task_confirmation %}
+<div class="h-100 d-flex align-items-center justify-content-center" style="margin-top:100px">
+<div class="card" style="width: 40rem;">
+    <div class="card-header">
+        <h5 class="card-title">Task - {{ task.title }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Task Created By - {{ task.created_by }}</h6>
+      </div>
+    <div class="card-body">
+      {{ task.project.name }}
+      <h6 class="card-subtitle mb-2 text-muted">Project Owner - {{ task.project.created_by }}</h6>
+      <p class="card-text">{{ task.description }}</p>
+      <form action="" method="POST">
+        {% csrf_token %}
+      <div class="alert alert-danger" role="alert">
+        Are you sure you want to delete the task?
+        <div>
+        <a class="btn btn-secondary" href="{% url 'project-tasks' task.project.project_id %}">Cancel</a>
+        <input class="btn btn-danger" type="submit" value="Delete Task" />
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+{% endblock delete_task_confirmation %}

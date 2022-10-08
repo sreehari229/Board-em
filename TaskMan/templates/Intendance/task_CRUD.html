@@ -2,7 +2,7 @@
 {% load widget_tweaks %}
 {% load static %}
 
-{% block create_task_content %}
+{% block CRUD_task_content %}
 <div class="container">
 <form action="" method="POST">
     {% csrf_token %}
@@ -35,4 +35,4 @@
 
 </form>
 </div>
-{% endblock create_task_content %}
+{% endblock CRUD_task_content %}

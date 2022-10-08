@@ -129,3 +129,15 @@ def update_task_page(request, task_id):
         'form':form,
     }
     return render(request, "Intendance/task_CRUD.html", data)
+
+@login_required(login_url='login')
+def delete_task_page(request, task_id):
+    task = Task.objects.get(task_id=task_id)
+    if request.method == "POST":
+        task.delete()
+        messages.success(request, f"Task Deleted - {task.title}")
+        return redirect('project-tasks', pk=task.project.project_id)
+    data = {
+        'task':task,
+    }
+    return render(request, "Intendance/task_removal_confirmation.html", data)
