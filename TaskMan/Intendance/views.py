@@ -1,8 +1,10 @@
+from tabnanny import check
 from turtle import title
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import check_password
 from .forms import *
 from .models import *
 
@@ -141,3 +143,69 @@ def delete_task_page(request, task_id):
         'task':task,
     }
     return render(request, "Intendance/task_removal_confirmation.html", data)
+
+
+@login_required(login_url='login')
+def change_password(request):
+    if request.method == "POST":
+        entered_password = request.POST.get('currentPassword')
+        if check_password(entered_password, request.user.password):
+            new_password = request.POST.get('inputPasswordNew')
+            new_password_verify = request.POST.get('inputPasswordNewVerify')
+            if new_password == new_password_verify:
+                user_obj = User.objects.get(username=request.user.username)
+                user_obj.set_password(new_password)
+                user_obj.save()
+                messages.success(request, "Password changed!")
+                return redirect('profile')
+            else:
+                messages.warning(request, "New Password does not match! Please re-enter password")
+                return redirect('change-password')
+        else:
+            messages.warning(request, "Your current password does not match with existing password.")
+            return redirect('change-password')
+    
+    data = {
+        
+    }
+    return render(request, "Intendance/password_change.html", data)
+
+
+@login_required(login_url='login')
+def delete_project_page(request, project_id):
+    project_obj = Project.objects.get(project_id=project_id)
+    if request.method == "POST":
+        confirmation_text = request.POST.get('Iagreeinp')
+        if confirmation_text == "I agree to delete project":
+            project_obj.delete()
+            messages.success(request, "Project Deleted!")
+            return redirect('acc-page')
+        else:
+            messages.warning(request, "Please type the below statement to confirm the deletion of Project!")
+            return redirect('delete-project')
+    data = {
+        'project':project_obj,
+    }
+    return render(request, "Intendance/delete_project.html", data)
+
+
+@login_required(login_url='login')
+def search_user(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        profiles = User.objects.filter(username__icontains=username)
+        data = {
+            'profiles':profiles,
+        }
+        return render(request, "Intendance/search_user.html", data)
+    else:
+        return redirect("acc-page")
+    
+
+@login_required(login_url='login')
+def searched_profile(request, username):
+    userobj = User.objects.get(username=username)
+    data = {
+        'userobj':userobj,
+    }
+    return render(request, "Intendance/searched_profile.html", data)

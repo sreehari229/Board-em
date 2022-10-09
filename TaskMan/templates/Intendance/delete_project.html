@@ -1,0 +1,33 @@
+{% extends 'Intendance/base_layout.html' %}
+{% load static %}
+
+{% block delete_project_content %}
+    <div class="card container" style="margin-top:69px">
+        <div class="card-header">
+          Delete Project - {{ project.name }}
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Are you absolutely sure?</h5>
+          <p class="card-text">This action cannot be undone. This will permanently delete the {{ project.name }} project, tasks, issues, comments, packages, secrets, workflow runs, and remove all collaborator associations.
+            
+            <br><br>
+            Please type "I agree to delete project" to confirm.
+            </p>
+            <form action="" method="POST">
+                {% csrf_token %}
+            <input class="form-control form-control-lg" id="Iagreeinp" name="Iagreeinp" type="text" placeholder="I agree to delete project"><br>
+          <input type="submit" id="btnSubmit" class="btn btn-danger" value="I understand the consequences, delete this project" disabled/>
+            </form>
+        </div>
+      </div>
+      <script type="text/javascript">
+        document.getElementById("Iagreeinp").addEventListener("keyup", function() {
+            var nameInput = document.getElementById('Iagreeinp').value;
+            if (nameInput == "I agree to delete project") {
+                document.getElementById('btnSubmit').removeAttribute("disabled");
+            } else {
+                document.getElementById('btnSubmit').setAttribute("disabled", null);
+            }
+        });
+    </script>
+{% endblock delete_project_content %}

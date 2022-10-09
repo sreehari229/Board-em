@@ -1,25 +1,56 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="">Board Em</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <a style="margin-left:15px;margin-right:15px" class="navbar-brand" href="{% url 'acc-page' %}" >Board Em</a>
+    
     <div class="collapse navbar-collapse" id="navbarText">
-        <span class="navbar-text">
-            Logged in as {{ user.username }}
-          </span>
-      <ul class="navbar-nav nav justify-content-end ">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'acc-page' %}">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'profile' %}">Profile</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link btn btn-dark" href="{% url 'logout' %}">Logout</a>
-        </li>
-      </ul>
       
-    </div>
-  </nav>
 
+      <ul class="navbar-nav nav justify-content-end">
+        
+
+          <li class="nav-item"><a class="nav-link text-white" href="{% url 'acc-page' %}"> 
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+              <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+            </svg>
+            Home</a></li>
+
+            <li class="nav-item"><a class="nav-link text-white" href="{% url 'profile' %}"> 
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+              </svg>
+              Profile Settings</a></li>
+      </ul>
+    </div>
+
+    <span class="navbar-text text-info" style="margin:0 30px 0 30px">
+      Logged in as {{ user.username }}
+    </span>
+
+
+    <form class="form-inline" action="{% url 'search-user' %}" method="POST">
+      {% csrf_token %}
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">@</span>
+        </div>
+        <input type="text" class="form-inline" placeholder="Username" name="username" autocomplete="off">
+        <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search" />
+      </div>
+    </form>
+    
+    <ul class="navbar-nav nav justify-content-end pull-right" style="margin-left:15px;margin-right:15px">
+      <li class="nav-item"><a class="btn btn-danger" href="{% url 'logout' %}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-closed" viewBox="0 0 16 16">
+          <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z"/>
+          <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z"/>
+        </svg>
+        Logout</a></li>
+    </ul>
+
+    
+
+</nav> 
+
+
+  
   

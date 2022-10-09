@@ -1,4 +1,3 @@
-from http.client import HTTPResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
@@ -80,6 +79,7 @@ def login_page(request):
             
         return render(request, 'Doorway/login_page.html')
 
+
 @login_required(login_url='login')
 def logout_user(request):
     logout(request)
@@ -97,3 +97,57 @@ def email_verification(request, token):
     except Exception as e:
         messages.error(request, "Invalid token, please verify using the right token.")
         return redirect('login')
+    
+
+def forgot_password(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        
+        if not User.objects.filter(email=email).first():
+            messages.success(request, 'No user found with this email. Try again with a different email.')
+            return redirect('index')
+        
+        user_obj = User.objects.get(email=email)
+        token = str(uuid.uuid4())
+        fgp_obj= UserForgotPassword.objects.create(user = user_obj)
+        fgp_obj.forget_password_token = token
+        fgp_obj.save()
+        send_forget_password_mail(user_obj.email , token)
+        messages.success(request, 'A Forgot password email has been sent. Please reset your password and login.')
+        return redirect('index')
+    
+    return render(request, "Doorway/PasswordReset/forgot_password.html")
+
+
+def password_reset(request , token):
+    try:
+        fgp_obj = UserForgotPassword.objects.filter(forget_password_token = token).first()
+        context = {
+            'user_id' : fgp_obj.user.id
+            }
+        
+        if request.method == 'POST':
+            new_password = request.POST.get('new_password')
+            confirm_password = request.POST.get('reconfirm_password')
+            user_id = request.POST.get('user_id')
+            
+            if user_id is  None:
+                messages.success(request, 'No user id found.')
+                return redirect(f'/password-reset/{token}/')
+                
+            
+            if  new_password != confirm_password:
+                messages.success(request, 'both should  be equal.')
+                return redirect(f'/password-reset/{token}/')
+                         
+            #More Validations to be added
+            
+            user_obj = User.objects.get(id = user_id)
+            user_obj.set_password(new_password)
+            user_obj.save()
+            messages.success(request, "Password Reset Completed, Please login and continue.")
+            return redirect('login')
+            
+    except Exception as e:
+        print(e)
+    return render(request , "Doorway/PasswordReset/change_password.html")
