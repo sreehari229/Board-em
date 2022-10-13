@@ -71,8 +71,13 @@ def login_page(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 #Add a condition for email verification. Only if email is verified user will be able to login.
-                login(request, user)
-                return redirect('acc-page')
+                email_obj = UserEmailVerification.objects.get(user=user)
+                if email_obj.email_is_verified:
+                    login(request, user)
+                    return redirect('acc-page')
+                else:
+                    messages.warning(request, "Email not verified. Please verify your email and then login.")
+                    return redirect('login')
             else:
                 messages.error(request, "Username/Password is incorrect. Please type in the correct credentials to login.")
                 return redirect('login')

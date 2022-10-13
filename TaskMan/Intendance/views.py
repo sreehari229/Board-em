@@ -74,7 +74,7 @@ def create_project_page(request):
         'form' : form,
         'users' : User.objects.all()
     }
-    return render(request, 'Intendance/project_CRUD.html', data)
+    return render(request, 'Intendance/project_create.html', data)
 
 
 @login_required(login_url='login')
@@ -209,3 +209,37 @@ def searched_profile(request, username):
         'userobj':userobj,
     }
     return render(request, "Intendance/searched_profile.html", data)
+
+
+@login_required(login_url='login')
+def update_project_settings(request, project_id):
+    project_obj = Project.objects.get(project_id=project_id)
+    project_form = UpdateProjectForm(instance=project_obj)
+    data = {
+        'project':project_obj,
+        'form':project_form,
+    }
+    
+    if request.method == "POST":
+        form = UpdateProjectForm(request.POST, instance=project_obj)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Project settings updated.")
+            return redirect('project-tasks', pk=project_id)
+    
+    return render(request, "Intendance/project_update.html", data)
+
+
+@login_required(login_url='login')
+def leave_project(request, project_id):
+    project_obj = Project.objects.get(project_id=project_id)
+    if request.method == "POST":
+        confirmation_text = request.POST.get('Iagreeinp')
+        if confirmation_text == "Leave project":
+            project_obj.group_members.remove(request.user)
+            messages.success(request, f"Removed from Project {project_obj.name}")
+            return redirect("acc-page")
+    data = {
+        'project':project_obj,
+    }
+    return render(request, "Intendance/leave_project.html", data)

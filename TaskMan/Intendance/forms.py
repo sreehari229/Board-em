@@ -8,18 +8,6 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name','last_name']
-        """widgets = {
-            'first_name' : forms.TextInput(attrs={
-                 'class': "trial_class_css",
-                'style': 'max-width: 300px;',
-                'placeholder': 'First Name',
-                }),
-            'last_name' : forms.TextInput(attrs={
-                 'class': "trial_class_css",
-                'style': 'max-width: 300px;',
-                'placeholder': 'Last Name',
-                }),
-        }"""
         
 
 class ProfileUpdateForm(forms.ModelForm):
@@ -32,6 +20,13 @@ class CreateProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = '__all__'
+        
+
+class UpdateProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ['name','description','url','group_members','start_date','duration']
+
         
 class TaskFormCRUD(forms.ModelForm):
     class Meta:

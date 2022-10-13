@@ -2,9 +2,12 @@
 
 {% block acc_index_page_content %}
 
+<div class="row" style="margin-top:20px">
+  <div class="col-8">
+  
 
 
-<div class="container" style="margin:50px;" >
+<div class="container" >
     <a href="{% url 'create-project' %}" class="btn btn-primary btn-lg btn-block" style="width:inherit;">
       <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-terminal-plus" viewBox="0 0 16 16" style="margin-right:20px">
         <path d="M2 3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h5.5a.5.5 0 0 1 0 1H2a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v4a.5.5 0 0 1-1 0V4a1 1 0 0 0-1-1H2Z"/>
@@ -32,22 +35,25 @@
         {% endfor %}
       </tbody>
     </table>
-    
 </div>
 
+</div>
 
-
-{% comment %} <div class="container-sm">
+<div class="col-4">
+<div class="container-sm">
 <div class="card">
-    <h5 class="card-header">Invites</h5>
+    <h5 class="card-header">Notifications</h5>
     
     <div class="card-body">
       <h5 class="card-title">Group Invitation</h5>
       <p class="card-text">MR X has invited you to join Project Y</p>
-      <a href="#" class="btn btn-success">Accept</a>
-      <a href="#" class="btn btn-danger">Reject</a>
+      {% comment %} <a href="#" class="btn btn-success">Accept</a>
+      <a href="#" class="btn btn-danger">Reject</a> {% endcomment %}
     </div>
     
   </div>
-</div> {% endcomment %}
+</div> 
+</div>
+
+</div>
 {% endblock acc_index_page_content %}
