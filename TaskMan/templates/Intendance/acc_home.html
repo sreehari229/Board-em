@@ -1,7 +1,6 @@
 {% extends 'Intendance/base_layout.html' %}
 
 {% block acc_index_page_content %}
-
 <div class="row" style="margin-top:20px">
   <div class="col-8">
   
@@ -23,6 +22,7 @@
           <th scope="col">Name of the project</th>
           <th scope="col">Project Owner</th>
           <th scope="col">Created Date</th>
+          <th scope="col">Last Modified</th>
         </tr>
       </thead>
       <tbody>
@@ -31,6 +31,7 @@
             <td><a href='{% url 'project-tasks' prodata.project_id %}'> {{ prodata.name }}</a></td>
             <td>{{ prodata.created_by }}</td>
             <td>{{ prodata.created_date }}</td>
+            <td>{{ prodata.modified_date }}</td>
           </tr>
         {% endfor %}
       </tbody>
@@ -46,9 +47,7 @@
     
     <div class="card-body">
       <h5 class="card-title">Group Invitation</h5>
-      <p class="card-text">MR X has invited you to join Project Y</p>
-      {% comment %} <a href="#" class="btn btn-success">Accept</a>
-      <a href="#" class="btn btn-danger">Reject</a> {% endcomment %}
+      <p class="card-text">Notifications about project</p>
     </div>
     
   </div>

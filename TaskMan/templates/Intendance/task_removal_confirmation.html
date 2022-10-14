@@ -5,16 +5,34 @@
 <div class="card" style="width: 40rem;">
     <div class="card-header">
         <h5 class="card-title">Task - {{ task.title }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Task Created By - {{ task.created_by }}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">Task ID - {{ task.task_id }}</h6>
       </div>
     <div class="card-body">
-      {{ task.project.name }}
-      <h6 class="card-subtitle mb-2 text-muted">Project Owner - {{ task.project.created_by }}</h6>
-      <p class="card-text">{{ task.description }}</p>
+      <dl class="row">
+        <dt class="col-sm-3">Project part of</dt>
+        <dd class="col-sm-9">{{ task.project.name }}</dd>
+      
+        <dt class="col-sm-3">Project Owner</dt>
+        <dd class="col-sm-9">
+          <p>@{{ task.project.created_by }}</p>
+        </dd>
+      
+        
+        <dt class="col-sm-3" style="margin-top:25px">Task Description</dt>
+        <dd class="col-sm-9" style="margin-top:25px">{{ task.description }}</dd>
+        <dt class="col-sm-3">Task created by</dt>
+        <dd class="col-sm-9">{{ task.created_by }}</dd>
+        <dt class="col-sm-3">Task created date</dt>
+        <dd class="col-sm-9">{{ task.created_date }}</dd>
+        <dt class="col-sm-3">Last Modified Date</dt>
+        <dd class="col-sm-9">{{ task.modified_date }}</dd>
+        
+      </dl>
       <form action="" method="POST">
         {% csrf_token %}
-      <div class="alert alert-danger" role="alert">
-        Are you sure you want to delete the task?
+        <h6>This action cannot be undone</h6>
+      <div class="text-danger">
+        <h5>Are you sure you want to delete the task?</h5>
         <div>
         <a class="btn btn-secondary" href="{% url 'project-tasks' task.project.project_id %}">Cancel</a>
         <input class="btn btn-danger" type="submit" value="Delete Task" />
@@ -24,4 +42,6 @@
     </div>
   </div>
 </div>
+
+
 {% endblock delete_task_confirmation %}

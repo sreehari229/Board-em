@@ -48,12 +48,42 @@
     <div class="col">
     <div class="bg-light p-5 rounded">
       <h1>{{ project_data.name }}</h1>
-      <p class="lead">{{ project_data.description }}</p>
-      <a class="btn btn-lg btn-primary" href="{{ project_data.url }}" role="button">Project Link &raquo;</a>
+      
+      <dl class="row">
+        <dt class="col-sm-3">Description</dt>
+        <dd class="col-sm-9">{{ project_data.description }}</dd>
+      
+        
+      
+        <dt class="col-sm-3">Created Date</dt>
+        <dd class="col-sm-9">{{ project_data.created_date }}</dd>
+      
+        <dt class="col-sm-3 text-truncate">Project Owner</dt>
+        <dd class="col-sm-9">@{{ project_data.created_by }}</dd>
+
+        <dt class="col-sm-3 text-truncate">Project ID</dt>
+        <dd class="col-sm-9">{{ project_data.project_id }}</dd>
+
+        <dt class="col-sm-3 text-truncate">Start Date</dt>
+        <dd class="col-sm-9">{{ project_data.start_date }}</dd>
+
+        <dt class="col-sm-3 text-truncate">Duration</dt>
+        <dd class="col-sm-9">{{ project_data.duration }} weeks</dd>
+
+        <dt class="col-sm-3 text-truncate">Last Modified</dt>
+        <dd class="col-sm-9">{{ project_data.modified_date }}</dd>
+      
+        
+
+      </dl>
+      <a class="link-primary" href="{{ project_data.url }}">Project Link &raquo;</a>
     </div>
   </div>
+
+  
+
   <div class="col-sm-3 ">
-    <div class="list-group w-auto" style="overflow-y:scroll;height:250px;">
+    <div class="list-group w-auto" style="overflow-y:scroll;height:400px;">
 
       {% for member in project_data.group_members.all  %}
       <a href="{% url 'searched-profile' member.username %}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
@@ -69,23 +99,24 @@
       
     </div>
   </div>
-    
-  </div>
+    </div>
   </main>
-    <br><br>
-    <div class="row">
+    
+  
+  <br><br>
+    <div class="row bg-light" style="overflow-y: scroll;height: 600px;">
         <div class="col-sm">
-            <h3>To-do</h3>
+            <h3 class="text-center p-2"><strong>To-do</strong></h3>
             {% for tskdt in task_data %}
             {% if tskdt.task_status == 'todo' %}
-            <div class="card" style="width: 18rem;margin-top:10px">
+            <div class="card" style="width: 18rem;margin-top:10px;background:#EBEDEA">
                 <div class="card-body">
                   <h5 class="card-title">{{ tskdt.title }}</h5>
                   <h6 class="card-subtitle mb-2 text-muted">Created By - {{ tskdt.created_by }}</h6>
                   <p class="card-text">{{ tskdt.description }}</p>
                   {% if tskdt.created_by == request.user or project_data.created_by == request.user %}
-                  <a href="{% url 'update-task' tskdt.task_id %}" class="card-link">Edit</a>
-                  <a href="{% url 'delete-task' tskdt.task_id %}" class="card-link">Delete</a>
+                  <a href="{% url 'update-task' tskdt.task_id %}" style="text-decoration:none" class="card-link link-info">Edit</a>
+                  <a href="{% url 'delete-task' tskdt.task_id %}" style="text-decoration:none" class="card-link link-danger">Delete</a>
                   {% endif %}
                 </div>
               </div>
@@ -93,17 +124,17 @@
               {% endfor %}
         </div>
         <div class="col-sm">
-            <h3>In Progress</h3>
+            <h3 class="text-center p-2"><strong>In Progress</strong></h3>
             {% for tskdt in task_data %}
             {% if tskdt.task_status == 'inprogress' %}
-            <div class="card" style="width: 18rem;margin-top:10px">
+            <div class="card" style="width: 18rem;margin-top:10px;background:#EBEDEA">
                 <div class="card-body">
                   <h5 class="card-title">{{ tskdt.title }}</h5>
                   <h6 class="card-subtitle mb-2 text-muted">Created By - {{ tskdt.created_by }}</h6>
                   <p class="card-text">{{ tskdt.description }}</p>
                   {% if tskdt.created_by == request.user or project_data.created_by == request.user %}
-                  <a href="{% url 'update-task' tskdt.task_id %}" class="card-link">Edit</a>
-                  <a href="{% url 'delete-task' tskdt.task_id %}" class="card-link">Delete</a>
+                  <a href="{% url 'update-task' tskdt.task_id %}" style="text-decoration:none" class="card-link link-info">Edit</a>
+                  <a href="{% url 'delete-task' tskdt.task_id %}" style="text-decoration:none" class="card-link link-danger">Delete</a>
                   {% endif %}
                 </div>
               </div>
@@ -111,17 +142,17 @@
               {% endfor %}
         </div>
         <div class="col-sm">
-            <h3>Testing</h3>
+            <h3 class="text-center p-2"><strong>Testing</strong></h3>
             {% for tskdt in task_data %}
             {% if tskdt.task_status == 'testing' %}
-            <div class="card" style="width: 18rem;margin-top:10px">
+            <div class="card" style="width: 18rem;margin-top:10px;background:#EBEDEA">
                 <div class="card-body">
                   <h5 class="card-title">{{ tskdt.title }}</h5>
                   <h6 class="card-subtitle mb-2 text-muted">Created By - {{ tskdt.created_by }}</h6>
                   <p class="card-text">{{ tskdt.description }}</p>
                   {% if tskdt.created_by == request.user or project_data.created_by == request.user %}
-                  <a href="{% url 'update-task' tskdt.task_id %}" class="card-link">Edit</a>
-                  <a href="{% url 'delete-task' tskdt.task_id %}" class="card-link">Delete</a>
+                  <a href="{% url 'update-task' tskdt.task_id %}" style="text-decoration:none" class="card-link link-info">Edit</a>
+                  <a href="{% url 'delete-task' tskdt.task_id %}" style="text-decoration:none" class="card-link link-danger">Delete</a>
                   {% endif %}
                 </div>
               </div>
@@ -129,17 +160,17 @@
               {% endfor %}
           </div>
           <div class="col-sm">
-            <h3>Completed</h3>
+            <h3 class="text-center p-2"><strong>Completed</strong></h3>
             {% for tskdt in task_data %}
             {% if tskdt.task_status == 'completed' %}
-            <div class="card" style="width: 18rem;margin-top:10px">
+            <div class="card" style="width: 18rem;margin-top:10px;background:#EBEDEA">
                 <div class="card-body">
                   <h5 class="card-title">{{ tskdt.title }}</h5>
                   <h6 class="card-subtitle mb-2 text-muted">Created By - {{ tskdt.created_by }}</h6>
                   <p class="card-text">{{ tskdt.description }}</p>
                   {% if tskdt.created_by == request.user or project_data.created_by == request.user %}
-                  <a href="{% url 'update-task' tskdt.task_id %}" class="card-link">Edit</a>
-                  <a href="{% url 'delete-task' tskdt.task_id %}" class="card-link">Delete</a>
+                  <a href="{% url 'update-task' tskdt.task_id %}" style="text-decoration:none" class="card-link link-info">Edit</a>
+                  <a href="{% url 'delete-task' tskdt.task_id %}" style="text-decoration:none" class="card-link link-danger">Delete</a>
                   {% endif %}
                 </div>
               </div>
@@ -149,6 +180,6 @@
         
       </div>
     </div>
-
+<br><br>
 
 {% endblock project_task_content %}

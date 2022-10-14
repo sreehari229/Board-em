@@ -3,10 +3,11 @@
 {% load static %}
 
 {% block CRUD_task_content %}
-<div class="container">
+
+<div class="container ml-5 mt-5 ">
 <form action="" method="POST">
     {% csrf_token %}
-    <div class="col-7 my-3">
+    <div class="my-3">
         <div class="input-group">
           <div class="input-group-prepend">
             <div class="input-group-text">Title</div>
@@ -15,14 +16,14 @@
         </div>
     </div>
 
-    <div class="col-7 my-3">
+    <div class="my-3">
       <div class="input-group-prepend">
         <div class="input-group-text">Description</div>
       </div>
     {% render_field form.description class="form-control" %}
     </div>
 
-    <div class="col-7 my-3">
+    <div class="my-3">
         <div class="input-group">      
         {% render_field form.task_status class="form-select  mb-3" %}
             <div class="input-group-prepend ">
@@ -31,8 +32,10 @@
         </div>
     </div>
 
-    <input type="submit" value="Submit Task" class="btn btn-primary btn-lg btn-block" />
-
+    <div>
+    <input type="submit" value="Submit Task" class="btn btn-primary btn-lg btn-block" style="width:-webkit-fill-available" />
+    </div>
 </form>
 </div>
+
 {% endblock CRUD_task_content %}
