@@ -5,7 +5,7 @@
   {% csrf_token %}
   <input type="text" placeholder="Username" name="username" />
   <input type="password" placeholder="Password" name="password" />
-  <a href="{% url 'password_reset' %}">Forgot Password</a>
+  <a href="{% url 'forgot_password' %}">Forgot Password</a>
   <input type="submit" value="Submit">
 </form>
 {% endblock login_page_content %}

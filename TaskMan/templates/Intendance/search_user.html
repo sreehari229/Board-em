@@ -1,0 +1,43 @@
+{% extends 'Intendance/base_layout.html' %}
+{% load static %}
+
+{% block search_user_list %}
+<br>
+{% for userprofile in profiles %}
+
+
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-md-9 col-lg-7 col-xl-5">
+        <div class="card" style="border-radius: 15px; background-color: #C8C8C8;">
+          <div class="card-body p-4 text-black">
+            
+            <div class="d-flex align-items-center mb-4">
+              <div class="flex-shrink-0">
+                <img src="{{ userprofile.profile.image.url }}"
+                  alt="Generic placeholder image" class="img-fluid rounded-circle border border-dark border-3"
+                  style="width: 70px;height:70px">
+              </div>
+              
+              <div class="flex-grow-1 ms-3">
+                  <div class="d-flex flex-row align-items-center mb-2">
+                  <p class="mb-0 me-2">@{{ userprofile.username }}</p>
+                  
+                </div>  
+                <div>
+                  <p style="display:inline">{{ userprofile.first_name }} {{ userprofile.last_name }}</p>
+                  <a type="button" class="btn btn-outline-dark btn-rounded btn-sm pull-right"
+                    data-mdb-ripple-color="dark" href="{% url 'searched-profile' userprofile.username %}" >See profile</a>
+                  </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <br>
+{% endfor %}
+
+    
+{% endblock search_user_list %}

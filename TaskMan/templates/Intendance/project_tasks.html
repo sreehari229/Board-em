@@ -1,0 +1,185 @@
+{% extends 'Intendance/base_layout.html' %}
+{% load static %}
+
+{% block project_task_content %}
+
+<div class="container">
+  <div class="d-flex flex-row-reverse" style="margin-top:15px; margin-bottom:15px">
+
+    <div class="p-2 ">
+
+    <a class="btn btn-primary btn-lg btn-block" href="{% url 'create-task' project_data.project_id %}">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-task" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z"/>
+        <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9z"/>
+        <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z"/>
+      </svg>
+      Create Task</a>
+    {% if project_data.created_by == request.user %}
+    <a class="btn btn-warning btn-lg btn-block" href="{% url 'update-project' project_data.project_id %}">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+        <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
+        <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
+      </svg>
+      
+      Edit Project Settings</a>
+    
+    <a class="btn btn-danger btn-lg btn-block" href="{% url 'delete-project' project_data.project_id %}">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+      </svg>
+      Delete Project</a>
+    {% else %}
+    <a class="btn btn-danger btn-lg btn-block" href="{% url 'leave-project' project_data.project_id %}">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+      </svg>
+      Leave Project</a>
+    {% endif %}
+  </div>
+  </div>
+
+  
+
+  <main class="container">
+    <div class="row">
+    <div class="col">
+    <div class="bg-light p-5 rounded">
+      <h1>{{ project_data.name }}</h1>
+      
+      <dl class="row">
+        <dt class="col-sm-3">Description</dt>
+        <dd class="col-sm-9">{{ project_data.description }}</dd>
+      
+        
+      
+        <dt class="col-sm-3">Created Date</dt>
+        <dd class="col-sm-9">{{ project_data.created_date }}</dd>
+      
+        <dt class="col-sm-3 text-truncate">Project Owner</dt>
+        <dd class="col-sm-9">@{{ project_data.created_by }}</dd>
+
+        <dt class="col-sm-3 text-truncate">Project ID</dt>
+        <dd class="col-sm-9">{{ project_data.project_id }}</dd>
+
+        <dt class="col-sm-3 text-truncate">Start Date</dt>
+        <dd class="col-sm-9">{{ project_data.start_date }}</dd>
+
+        <dt class="col-sm-3 text-truncate">Duration</dt>
+        <dd class="col-sm-9">{{ project_data.duration }} weeks</dd>
+
+        <dt class="col-sm-3 text-truncate">Last Modified</dt>
+        <dd class="col-sm-9">{{ project_data.modified_date }}</dd>
+      
+        
+
+      </dl>
+      <a class="link-primary" href="{{ project_data.url }}">Project Link &raquo;</a>
+    </div>
+  </div>
+
+  
+
+  <div class="col-sm-3 ">
+    <div class="list-group w-auto" style="overflow-y:scroll;height:400px;">
+
+      {% for member in project_data.group_members.all  %}
+      <a href="{% url 'searched-profile' member.username %}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+        <img src="{{ member.profile.image.url }}" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+        <div class="d-flex gap-2 w-100 justify-content-between">
+          <div>
+            <h6 class="mb-0">{{ member.first_name }} {% if project_data.created_by == member %}<span class="badge rounded-pill bg-secondary">Project Owner</span>{% endif %}</h6>
+            <p class="mb-0 opacity-75">@ {{ member.username }}</p>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+      
+    </div>
+  </div>
+    </div>
+  </main>
+    
+  
+  <br><br>
+    <div class="row bg-light" style="overflow-y: scroll;height: 600px;">
+        <div class="col-sm">
+            <h3 class="text-center p-2"><strong>To-do</strong></h3>
+            {% for tskdt in task_data %}
+            {% if tskdt.task_status == 'todo' %}
+            <div class="card" style="width: 18rem;margin-top:10px;background:#EBEDEA">
+                <div class="card-body">
+                  <h5 class="card-title">{{ tskdt.title }}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">Created By - {{ tskdt.created_by }}</h6>
+                  <p class="card-text">{{ tskdt.description }}</p>
+                  {% if tskdt.created_by == request.user or project_data.created_by == request.user %}
+                  <a href="{% url 'update-task' tskdt.task_id %}" style="text-decoration:none" class="card-link link-info">Edit</a>
+                  <a href="{% url 'delete-task' tskdt.task_id %}" style="text-decoration:none" class="card-link link-danger">Delete</a>
+                  {% endif %}
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}
+        </div>
+        <div class="col-sm">
+            <h3 class="text-center p-2"><strong>In Progress</strong></h3>
+            {% for tskdt in task_data %}
+            {% if tskdt.task_status == 'inprogress' %}
+            <div class="card" style="width: 18rem;margin-top:10px;background:#EBEDEA">
+                <div class="card-body">
+                  <h5 class="card-title">{{ tskdt.title }}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">Created By - {{ tskdt.created_by }}</h6>
+                  <p class="card-text">{{ tskdt.description }}</p>
+                  {% if tskdt.created_by == request.user or project_data.created_by == request.user %}
+                  <a href="{% url 'update-task' tskdt.task_id %}" style="text-decoration:none" class="card-link link-info">Edit</a>
+                  <a href="{% url 'delete-task' tskdt.task_id %}" style="text-decoration:none" class="card-link link-danger">Delete</a>
+                  {% endif %}
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}
+        </div>
+        <div class="col-sm">
+            <h3 class="text-center p-2"><strong>Testing</strong></h3>
+            {% for tskdt in task_data %}
+            {% if tskdt.task_status == 'testing' %}
+            <div class="card" style="width: 18rem;margin-top:10px;background:#EBEDEA">
+                <div class="card-body">
+                  <h5 class="card-title">{{ tskdt.title }}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">Created By - {{ tskdt.created_by }}</h6>
+                  <p class="card-text">{{ tskdt.description }}</p>
+                  {% if tskdt.created_by == request.user or project_data.created_by == request.user %}
+                  <a href="{% url 'update-task' tskdt.task_id %}" style="text-decoration:none" class="card-link link-info">Edit</a>
+                  <a href="{% url 'delete-task' tskdt.task_id %}" style="text-decoration:none" class="card-link link-danger">Delete</a>
+                  {% endif %}
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}
+          </div>
+          <div class="col-sm">
+            <h3 class="text-center p-2"><strong>Completed</strong></h3>
+            {% for tskdt in task_data %}
+            {% if tskdt.task_status == 'completed' %}
+            <div class="card" style="width: 18rem;margin-top:10px;background:#EBEDEA">
+                <div class="card-body">
+                  <h5 class="card-title">{{ tskdt.title }}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">Created By - {{ tskdt.created_by }}</h6>
+                  <p class="card-text">{{ tskdt.description }}</p>
+                  {% if tskdt.created_by == request.user or project_data.created_by == request.user %}
+                  <a href="{% url 'update-task' tskdt.task_id %}" style="text-decoration:none" class="card-link link-info">Edit</a>
+                  <a href="{% url 'delete-task' tskdt.task_id %}" style="text-decoration:none" class="card-link link-danger">Delete</a>
+                  {% endif %}
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}
+          </div>
+        
+      </div>
+    </div>
+<br><br>
+
+{% endblock project_task_content %}

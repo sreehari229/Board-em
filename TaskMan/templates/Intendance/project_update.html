@@ -1,0 +1,53 @@
+{% extends 'Intendance/base_layout.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block update_project_settings %}
+<br><br>
+<div class="container">
+    <div class="tab-pane active" id="profile">
+      <h3>YOUR PROJECT SETTINGS</h3>
+      <h5 class="mb-0 mt-5">Project ID:</h5>
+        <p>{{ project.project_id }}</p>
+      <hr>
+      <form action="" method="POST">
+        {% csrf_token %}
+        {% comment %} {{ form.as_p }} {% endcomment %}
+        <div class="form-group">
+          <label for="fullName">Project Name</label>
+          {% render_field form.name class="form-control" placeholder="Name" %}
+          <small id="fullNameHelp" class="form-text text-muted">Your name may appear around here where you are mentioned. You can change or remove it at any time.</small>
+        </div>
+        <div class="form-group">
+          <label for="bio">Description</label>
+          {% render_field form.description class="form-control" placeholder="Description" %}
+        </div>
+        <div class="form-group">
+          <label for="url">URL</label>
+          {% render_field form.url class="form-control" placeholder="URL" %}
+        </div>
+        <div class="form-group">
+            <label>Group Members</label>
+            {% render_field form.group_members class="form-control" %}
+          </div>
+          <div class="form-group">
+            <label>Start Date</label>
+            {% render_field form.start_date class="form-control" type="date" %}
+          </div>
+          
+        <div class="form-group">
+          <label for="location">Duration</label>
+          <div class="form-group small text-muted">
+            In Weeks
+          </div>
+          {% render_field form.duration class="form-control" %}
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary btn-lg btn-block" style="width:500px">Update Project Settings</button>
+
+      </form>
+      <br><br>
+
+    </div>
+</div>
+{% endblock update_project_settings %}

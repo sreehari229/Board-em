@@ -1,25 +1,58 @@
 {% extends 'Intendance/base_layout.html' %}
 
 {% block acc_index_page_content %}
+<div class="row" style="margin-top:20px">
+  <div class="col-8">
+  
 
 
-
-<div class="container">
-    <h6> Logged in user ;Index page for logged in users. Blah </h6>
-    <a href="{% url 'create-project' %}" class="btn btn-primary">Create Project</a>
+<div class="container" >
+    <a href="{% url 'create-project' %}" class="btn btn-primary btn-lg btn-block" style="width:inherit;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-terminal-plus" viewBox="0 0 16 16" style="margin-right:20px">
+        <path d="M2 3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h5.5a.5.5 0 0 1 0 1H2a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v4a.5.5 0 0 1-1 0V4a1 1 0 0 0-1-1H2Z"/>
+        <path d="M3.146 5.146a.5.5 0 0 1 .708 0L5.177 6.47a.75.75 0 0 1 0 1.06L3.854 8.854a.5.5 0 1 1-.708-.708L4.293 7 3.146 5.854a.5.5 0 0 1 0-.708ZM5.5 9a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5ZM16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 0 0 1 0v-1h1a.5.5 0 0 0 0-1h-1v-1a.5.5 0 0 0-.5-.5Z"/>
+      </svg>
+      Create Project
+    </a>
+  
+  
+    <table class="table table-striped bg-light">
+      <thead>
+        <tr>
+          <th scope="col">Name of the project</th>
+          <th scope="col">Project Owner</th>
+          <th scope="col">Created Date</th>
+          <th scope="col">Last Modified</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for prodata in projects_data %}
+          <tr>
+            <td><a href='{% url 'project-tasks' prodata.project_id %}'> {{ prodata.name }}</a></td>
+            <td>{{ prodata.created_by }}</td>
+            <td>{{ prodata.created_date }}</td>
+            <td>{{ prodata.modified_date }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 </div>
 
+</div>
+
+<div class="col-4">
 <div class="container-sm">
 <div class="card">
-    <h5 class="card-header">Invites</h5>
+    <h5 class="card-header">Notifications</h5>
     
     <div class="card-body">
       <h5 class="card-title">Group Invitation</h5>
-      <p class="card-text">MR X has invited you to join Project Y</p>
-      <a href="#" class="btn btn-success">Accept</a>
-      <a href="#" class="btn btn-danger">Reject</a>
+      <p class="card-text">Notifications about project</p>
     </div>
     
   </div>
+</div> 
+</div>
+
 </div>
 {% endblock acc_index_page_content %}

@@ -1,0 +1,41 @@
+{% extends 'Intendance/base_layout.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block CRUD_task_content %}
+
+<div class="container ml-5 mt-5 ">
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="my-3">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">Title</div>
+          </div>
+          {% render_field form.title class="form-control" %}      
+        </div>
+    </div>
+
+    <div class="my-3">
+      <div class="input-group-prepend">
+        <div class="input-group-text">Description</div>
+      </div>
+    {% render_field form.description class="form-control" %}
+    </div>
+
+    <div class="my-3">
+        <div class="input-group">      
+        {% render_field form.task_status class="form-select  mb-3" %}
+            <div class="input-group-prepend ">
+                <div class="input-group-text">Task Status</div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+    <input type="submit" value="Submit Task" class="btn btn-primary btn-lg btn-block" style="width:-webkit-fill-available" />
+    </div>
+</form>
+</div>
+
+{% endblock CRUD_task_content %}
