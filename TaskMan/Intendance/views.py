@@ -1,5 +1,5 @@
-from tabnanny import check
-from turtle import title
+from django.conf import settings
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -243,3 +243,27 @@ def leave_project(request, project_id):
         'project':project_obj,
     }
     return render(request, "Intendance/leave_project.html", data)
+
+
+@login_required(login_url='login')
+def compose_group_email(request, project_id):
+    project_obj = Project.objects.get(project_id=project_id)
+    
+    data = {
+        'project_data':project_obj,
+    }
+    
+    if request.method == "POST":
+        subject = "Board 'em " + request.POST.get('subject')
+        message = request.POST.get('message')
+        recipient_list = [member.email for member in project_obj.group_members.all()]
+        print(recipient_list)
+        try:
+            email_from = settings.EMAIL_HOST_USER
+            send_mail(subject, message, email_from, recipient_list)
+            messages.success(request, "Email sent successfully.")
+            return redirect('project-tasks', pk=project_id)
+        except Exception as e:
+            messages.success(request, "Error has occured, Email Not sent.")
+            return redirect('project-tasks', pk=project_id)
+    return render(request, "Intendance/group_email_compose.html", data)

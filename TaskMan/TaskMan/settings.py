@@ -41,10 +41,14 @@ INSTALLED_APPS = [
     'Doorway',
     'Intendance',
     'widget_tweaks',
+    'Conveyance',
+    'rest_framework',
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -141,3 +145,5 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.environ.get("GMAIL_USERNAME")
 EMAIL_HOST_PASSWORD = os.environ.get("GMAIL_TOKEN")
+
+CORS_ALLOW_ALL_ORIGINS = True
