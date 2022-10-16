@@ -78,3 +78,14 @@ class Project_Invitation(models.Model):
     status = models.CharField(max_length=100, choices=invite_status, default='sent')
     created_date = models.DateField(auto_now_add=True)
     modified_date = models.DateField(auto_now=True)
+    
+
+class NotificationUser(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_date = models.DateTimeField(auto_now=True)
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    
+    def __str__(self):
+        return f"{self.user} - {self.title}"
+    

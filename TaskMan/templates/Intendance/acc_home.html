@@ -1,11 +1,13 @@
 {% extends 'Intendance/base_layout.html' %}
-
+{% load static %}
 {% block acc_index_page_content %}
+
+
+
+
+
 <div class="row" style="margin-top:20px">
   <div class="col-8">
-  
-
-
 <div class="container" >
     <a href="{% url 'create-project' %}" class="btn btn-primary btn-lg btn-block" style="width:inherit;">
       <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-terminal-plus" viewBox="0 0 16 16" style="margin-right:20px">
@@ -45,9 +47,13 @@
 <div class="card">
     <h5 class="card-header">Notifications</h5>
     
-    <div class="card-body">
-      <h5 class="card-title">Group Invitation</h5>
-      <p class="card-text">Notifications about project</p>
+    <div class="card-body" style="height:500px;overflow-y:scroll">
+      {% for notification in notifications %}
+      <h6 class="card-title"><b>{{ notification.title }}</b></h6>
+      <p class="text-secondary my-0">{{ notification.created_date }}</p>
+      <p class="card-text my-0">{{ notification.description }}</p>
+      <hr>
+      {% endfor %}
     </div>
     
   </div>

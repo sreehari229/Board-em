@@ -11,7 +11,8 @@ from .models import *
 @login_required(login_url='login')
 def acc_index_page(request):
     data = {
-        'projects_data' : Project.objects.filter(group_members=request.user),    
+        'projects_data' : Project.objects.filter(group_members=request.user),
+        'notifications' : NotificationUser.objects.filter(user=request.user).order_by('-created_date').values(),   
     }
     return render(request, 'Intendance/acc_home.html', data)
 
@@ -23,6 +24,7 @@ def profile_page(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
+            send_notification_db(request.user, "Profile Updated", "Updated Profile settings.")
             messages.success(request, "Your profile has been updated.")
             return redirect('profile')
         
@@ -67,6 +69,11 @@ def create_project_page(request):
             print(pkid)
             pj.group_members.add(User.objects.get(id=pkid))
         pj.group_members.add(request.user)
+        send_notification_db(
+            request.user, 
+            "Project Created " + pj.name, 
+            "You have been added to the project - " + pj.name,
+            pj.project_id)
         messages.success(request, f"Project created - {name}")
         return redirect('acc-page')
             
@@ -106,6 +113,11 @@ def create_task_page(request, project_id):
             task_status=task_status,
             created_by=request.user,
         )
+        send_notification_db(
+            request.user, 
+            "Task Created under project - " + project.name, 
+            request.user.username + " created a task - " + task.title ,
+            project.project_id)
         messages.success(request, f"Task created - {title}")
         return redirect("project-tasks", pk=project.project_id)
         
@@ -124,6 +136,11 @@ def update_task_page(request, task_id):
         description = request.POST.get('description')
         task_status = request.POST.get('task_status')
         Task.objects.filter(task_id=task_id).update(title=title, description=description, task_status=task_status)
+        send_notification_db(
+            request.user, 
+            "Task Updated under project - " + task.project.name, 
+            request.user.username + " has updated a task - " + task.title ,
+            task.project.project_id)
         messages.success(request, f"Task updated")
         return redirect('project-tasks', pk=task.project.project_id)
 
@@ -137,6 +154,11 @@ def delete_task_page(request, task_id):
     task = Task.objects.get(task_id=task_id)
     if request.method == "POST":
         task.delete()
+        send_notification_db(
+            request.user, 
+            "Task deleted under project - " + task.project.name, 
+            request.user.username + " has deleted a task - " + task.title ,
+            task.project.project_id)
         messages.success(request, f"Task Deleted - {task.title}")
         return redirect('project-tasks', pk=task.project.project_id)
     data = {
@@ -156,6 +178,10 @@ def change_password(request):
                 user_obj = User.objects.get(username=request.user.username)
                 user_obj.set_password(new_password)
                 user_obj.save()
+                send_notification_db(
+                    request.user, 
+                    "Password Changed", 
+                    "You just changed your password successfully.")
                 messages.success(request, "Password changed!")
                 return redirect('profile')
             else:
@@ -178,6 +204,11 @@ def delete_project_page(request, project_id):
         confirmation_text = request.POST.get('Iagreeinp')
         if confirmation_text == "I agree to delete project":
             project_obj.delete()
+            send_notification_db(
+                request.user, 
+                "Project Deleted - " + project_obj.name, 
+                request.user.username + " just deleted a project - " + project_obj.name ,
+                project_obj.project_id)
             messages.success(request, "Project Deleted!")
             return redirect('acc-page')
         else:
@@ -224,6 +255,11 @@ def update_project_settings(request, project_id):
         form = UpdateProjectForm(request.POST, instance=project_obj)
         if form.is_valid():
             form.save()
+            send_notification_db(
+                request.user, 
+                "Project settings updated - " + project_obj.name, 
+                request.user.username + " just updated project settings - " + project_obj.name ,
+                project_obj.project_id)
             messages.success(request, "Project settings updated.")
             return redirect('project-tasks', pk=project_id)
     
@@ -236,6 +272,11 @@ def leave_project(request, project_id):
     if request.method == "POST":
         confirmation_text = request.POST.get('Iagreeinp')
         if confirmation_text == "Leave project":
+            send_notification_db(
+                request.user, 
+                "User left project - " + project_obj.name, 
+                request.user.username + " left the project - " + project_obj.name ,
+                project_obj.project_id)
             project_obj.group_members.remove(request.user)
             messages.success(request, f"Removed from Project {project_obj.name}")
             return redirect("acc-page")
@@ -261,9 +302,23 @@ def compose_group_email(request, project_id):
         try:
             email_from = settings.EMAIL_HOST_USER
             send_mail(subject, message, email_from, recipient_list)
+            send_notification_db(
+                request.user, 
+                "Email Sent.", 
+                request.user.username + " has sent an email with info related to project - " + project_obj.name + " .Please check your inbox." ,
+                project_obj.project_id)
             messages.success(request, "Email sent successfully.")
             return redirect('project-tasks', pk=project_id)
         except Exception as e:
             messages.success(request, "Error has occured, Email Not sent.")
             return redirect('project-tasks', pk=project_id)
     return render(request, "Intendance/group_email_compose.html", data)
+
+
+def send_notification_db(user, title, description ,projectid=None):
+    if projectid is not None:
+        group_users = Project.objects.get(project_id=projectid).group_members.all()
+        for member in group_users:
+            NotificationUser.objects.create(user=member, title=title, description=description)
+    else:
+        NotificationUser.objects.create(user=user, title=title, description=description)
