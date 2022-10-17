@@ -2,8 +2,19 @@
 {% load static %}
 {% block acc_index_page_content %}
 
-
-
+<br>
+<section class="pt-5 pb-5 bg-secondary inner-header container rounded">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12 text-center">
+              <h1 class="mt-0 mb-3 text-white">{{ request.user.first_name }} {{ request.user.last_name }}</h1>
+              <div class="breadcrumbs">
+                  <p class="mb-0 text-white">{{ request.user.profile.bio }}</p>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
 
 
 <div class="row" style="margin-top:20px">
@@ -47,7 +58,7 @@
 <div class="card">
     <h5 class="card-header">Notifications</h5>
     
-    <div class="card-body" style="height:500px;overflow-y:scroll">
+    <div class="card-body" style="height:400px;overflow-y:scroll">
       {% for notification in notifications %}
       <h6 class="card-title"><b>{{ notification.title }}</b></h6>
       <p class="text-secondary my-0">{{ notification.created_date }}</p>
