@@ -89,3 +89,12 @@ class NotificationUser(models.Model):
     def __str__(self):
         return f"{self.user} - {self.title}"
     
+
+class Reasons(models.Model):
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    description = models.TextField()
+    
+    def __str__(self):
+        return f"{self.user} - {self.project}"
+    

@@ -9,12 +9,17 @@
     <div class="card-body">
       <h5 class="card-title">Are you absolutely sure?</h5>
       <p class="card-text">This action cannot be undone. This will remove you from the project group.
-        
+        <form action="" method="POST" autocomplete="off">
+          {% csrf_token %}
+        <div class="form-group">
+          <label>Please specify the reason for leaving the project {{ project.name }}.</label>
+          <textarea class="form-control" name="ReasonDesc" rows="5" required></textarea>
+        </div>
         <br><br>
         Please type "Leave project" to confirm.
         </p>
-        <form action="" method="POST">
-            {% csrf_token %}
+        
+            
         <input class="form-control form-control-lg" id="Iagreeinp" name="Iagreeinp" type="text" placeholder="Leave project"><br>
       <input type="submit" id="btnSubmit" class="btn btn-danger" value="I understand the consequences, leave the project" disabled/>
         </form>

@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password
 from .forms import *
 from .models import *
+from datetime import date
+from dateutil.relativedelta import relativedelta
 
 @login_required(login_url='login')
 def acc_index_page(request):
@@ -86,9 +88,13 @@ def create_project_page(request):
 
 @login_required(login_url='login')
 def project_tasks_page(request, pk):
+    task_data_here = Task.objects.filter(project=pk)
+    project_data_here = Project.objects.get(project_id=pk)
+    project_end_date = project_data_here.start_date + relativedelta(weeks=project_data_here.duration)
     data = {
-        'task_data' : Task.objects.filter(project=pk),
-        'project_data' : Project.objects.get(project_id=pk),
+        'task_data' : task_data_here,
+        'project_data' : project_data_here,
+        'project_end_date' : project_end_date,
     }
     return render(request, 'Intendance/project_tasks.html', data)
 
@@ -271,12 +277,18 @@ def leave_project(request, project_id):
     project_obj = Project.objects.get(project_id=project_id)
     if request.method == "POST":
         confirmation_text = request.POST.get('Iagreeinp')
+        reason_post = request.POST.get('ReasonDesc')
         if confirmation_text == "Leave project":
+            Reasons.objects.create(user=request.user, project=project_obj, description=reason_post)
             send_notification_db(
                 request.user, 
                 "User left project - " + project_obj.name, 
                 request.user.username + " left the project - " + project_obj.name ,
                 project_obj.project_id)
+            send_notification_db(
+                project_obj.created_by, 
+                request.user.username + " left project - " + project_obj.name, 
+                request.user.username + " left the project. Reason - " + reason_post)
             project_obj.group_members.remove(request.user)
             messages.success(request, f"Removed from Project {project_obj.name}")
             return redirect("acc-page")
