@@ -18,6 +18,6 @@ urlpatterns = [
     path('delete_project/<str:project_id>/', views.delete_project_page, name="delete-project"),
     path('update_project_settings/<str:project_id>/', views.update_project_settings, name="update-project"),
     path('leave_project/<str:project_id>/', views.leave_project, name="leave-project"),
-    
+    path('discussion_board/<str:project_id>/', views.project_discussion_page, name="discussion-board")
 ]
 

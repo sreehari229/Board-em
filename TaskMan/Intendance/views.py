@@ -334,3 +334,22 @@ def send_notification_db(user, title, description ,projectid=None):
             NotificationUser.objects.create(user=member, title=title, description=description)
     else:
         NotificationUser.objects.create(user=user, title=title, description=description)
+        
+
+@login_required(login_url='login')
+def project_discussion_page(request, project_id):
+    project_obj = Project.objects.get(project_id=project_id)
+    discussion_obj = Discussions.objects.filter(project=project_obj).order_by('-posted_on')
+    
+    data = {
+        'project': project_obj,
+        'discussions' : discussion_obj,
+        
+    }
+    
+    if request.method == "POST":
+        message = request.POST.get('message')
+        Discussions.objects.create(posted_by=request.user, project=project_obj, message=message)
+        return redirect('discussion-board', project_id=project_id)
+    
+    return render(request, "Intendance/project_discussion.html", data)

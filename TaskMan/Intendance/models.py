@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image as pilimg
 import uuid
+import datetime
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -97,4 +98,13 @@ class Reasons(models.Model):
     
     def __str__(self):
         return f"{self.user} - {self.project}"
+
+class Discussions(models.Model):
+    posted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    message = models.TextField()
+    posted_on = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f"{self.posted_by} - {self.project}"
     
