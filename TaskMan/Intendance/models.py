@@ -40,7 +40,7 @@ class Project(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="project_owner")
     created_date = models.DateField(auto_now_add=True)
     start_date = models.DateField()
-    duration = models.IntegerField()
+    duration = models.PositiveIntegerField()
     modified_date = models.DateField(auto_now=True)
     
     def __str__(self):

@@ -1,15 +1,21 @@
 {% extends 'Intendance/base_layout.html' %}
 {% load static %}
 {% block acc_index_page_content %}
-
+<style>
+  .clickable-mine:hover {
+    
+    cursor: pointer;
+    background-color:#E0ECF0;
+}
+</style>
 <br>
-<section class="pt-5 pb-5 bg-secondary inner-header container rounded border">
+<section class="pt-5 pb-5 bg-light inner-header container rounded border">
   <div class="container">
       <div class="row">
           <div class="col-md-12 text-center">
-              <h1 class="mt-0 mb-3 text-white">{{ request.user.first_name }} {{ request.user.last_name }}</h1>
+              <h1 class="mt-0 mb-3">{{ request.user.first_name }} {{ request.user.last_name }}</h1>
               <div class="breadcrumbs">
-                  <p class="mb-0 text-white">{{ request.user.profile.bio }}</p>
+                  <p class="mb-0">{{ request.user.profile.bio }}</p>
               </div>
           </div>
       </div>
@@ -40,8 +46,8 @@
       </thead>
       <tbody>
         {% for prodata in projects_data %}
-          <tr>
-            <td><a href='{% url 'project-tasks' prodata.project_id %}'> {{ prodata.name }}</a></td>
+          <tr class="clickable-mine" onclick="window.location='{% url 'project-tasks' prodata.project_id %}'">
+            <td><p><strong> {{ prodata.name }}</strong></p></td>
             <td>{{ prodata.created_by }}</td>
             <td>{{ prodata.created_date }}</td>
             <td>{{ prodata.modified_date }}</td>
@@ -72,4 +78,5 @@
 </div>
 
 </div>
+
 {% endblock acc_index_page_content %}

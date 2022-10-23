@@ -4,7 +4,7 @@
 
 
 <div class="container" style="justify-content:center;margin-top:50px">
-    <div class="container bg-light rounded" style="width:1000px">
+    <div class="container my-5 bg-light rounded" style="width:1000px">
         <h2> Discussion Board for {{ project.name }} </h2>
         <div class="container p-1">
             <form action="" method="POST" autocomplete="off">
@@ -15,11 +15,11 @@
                 </div>
             </form>
 
-            <div class="bg rounded" style="height:500px;padding:15px;overflow-y:scroll">
+            <div class="rounded my-3" style="height:500px;padding:15px;overflow-y:scroll">
                 {% for disc in discussions  %}
                 {% if disc.posted_by == request.user %}
                 <div style="display:flex;justify-content:right" class="my-2">
-                    <div class="bg border border-dark rounded" style="padding:15px;width:fit-content;max-width:500px;">
+                    <div class="bg-white border border-dark rounded" style="padding:15px;width:fit-content;max-width:500px;">
                         <figure>
                             <blockquote class="blockquote" style="display:flex;justify-content:right;">
                               <p>@{{ disc.posted_by }}</p>
@@ -34,7 +34,7 @@
                 </div>
                 {% else %}
                 <div style="display:flex;justify-content:left" class="my-2">
-                    <div class="bg border border-dark rounded" style="padding:15px;width:fit-content;max-width:500px;">
+                    <div class="bg-white border border-dark rounded" style="padding:15px;width:fit-content;max-width:500px;">
                         <figure>
                             <blockquote class="blockquote">
                               <p>@{{ disc.posted_by }}</p>
