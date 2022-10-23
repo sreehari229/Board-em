@@ -364,10 +364,10 @@ def download_as_csv(request, project_id):
     writer = csv.writer(response)
     writer.writerow(['Project ID', project_id])
     writer.writerow(['Project Title', project_obj.name])
-    writer.writerow(['Created Date','Title', 'Description', 'Task Status', 'Last Modified'])
-    
-    for task in Task.objects.filter(project=project_obj).values_list('created_date','title','description','task_status','modified_date'):
-        writer.writerow(task)
+    writer.writerow([''])
+    writer.writerow(['Created Date','Created By','Username','Title', 'Description', 'Task Status', 'Last Modified'])
+    for task in Task.objects.filter(project=project_obj):
+        writer.writerow([task.created_date, task.created_by.first_name, task.created_by.username, task.title, task.description, task.task_status, task.modified_date])
 
     response['Content-Disposition'] = 'attachment; filename="task_data.csv"'
 

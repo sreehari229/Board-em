@@ -4,6 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from dateutil.relativedelta import relativedelta
+import datetime
 from .models import *
 from .utils import *
 import uuid
@@ -110,7 +112,7 @@ def forgot_password(request):
         
         if not User.objects.filter(email=email).first():
             messages.success(request, 'No user found with this email. Try again with a different email.')
-            return redirect('index')
+            return redirect('forgot_password')
         
         user_obj = User.objects.get(email=email)
         token = str(uuid.uuid4())
@@ -126,11 +128,20 @@ def forgot_password(request):
 
 def password_reset(request , token):
     try:
+        fgp_obj = UserForgotPassword.objects.filter(forget_password_token = token).first()
+        user_id = fgp_obj.user.id
+        
+        token_creation_time = fgp_obj.created_at
+        token_expiration_time = token_creation_time + relativedelta(minutes=20)
+        if datetime.datetime.now(datetime.timezone.utc) > token_expiration_time:
+            print("Token Expired")
+            messages.info(request, "Token has expired, Please create a new token by re entering the details in Forgot-Password page.")
+            return redirect('forgot_password')
+        
         if request.method == 'POST':
             new_password = request.POST.get('new_password')
             confirm_password = request.POST.get('reconfirm_password')
-            fgp_obj = UserForgotPassword.objects.filter(forget_password_token = token).first()
-            user_id = fgp_obj.user.id
+            
                         
             if user_id is  None:
                 messages.success(request, 'No user id found.')
