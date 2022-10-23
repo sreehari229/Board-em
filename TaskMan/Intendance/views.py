@@ -5,10 +5,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password
+from django.http import HttpResponse
 from .forms import *
 from .models import *
 from datetime import date
 from dateutil.relativedelta import relativedelta
+import csv
 
 @login_required(login_url='login')
 def acc_index_page(request):
@@ -353,3 +355,20 @@ def project_discussion_page(request, project_id):
         return redirect('discussion-board', project_id=project_id)
     
     return render(request, "Intendance/project_discussion.html", data)
+
+
+@login_required(login_url='login')
+def download_as_csv(request, project_id):
+    project_obj = Project.objects.get(project_id=project_id)
+    response = HttpResponse(content_type='text/csv')
+    writer = csv.writer(response)
+    writer.writerow(['Project ID', project_id])
+    writer.writerow(['Project Title', project_obj.name])
+    writer.writerow(['Created Date','Title', 'Description', 'Task Status', 'Last Modified'])
+    
+    for task in Task.objects.filter(project=project_obj).values_list('created_date','title','description','task_status','modified_date'):
+        writer.writerow(task)
+
+    response['Content-Disposition'] = 'attachment; filename="task_data.csv"'
+
+    return response
