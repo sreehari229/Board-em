@@ -1,0 +1,48 @@
+{% extends 'Intendance/base_layout.html' %}
+{% load static %}
+
+{% block compose_email %}
+<br><br>
+<div class="container bg-white rounded p-3 border border-dark">
+    <h4>Project Group Members</h4>
+    <p class="text-muted">This email will be sent to all the group members involed in this project.</p>
+    
+    <div class="container" >
+        <div class="d-flex justify-content-around" >
+            {% for member in project_data.group_members.all %}
+                <div class="p-2">
+                    <img src="{{ member.profile.image.url }}" alt="{{ member.username }}" class="img-fluid rounded-circle border border-dark border-3" width="85px">
+                <h6>@{{ member.username }}</h6>
+                    {% if project_data.created_by == member %}
+                    <p class="text-success">Project Owner</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+<br>
+<br>
+<div class="container">
+    <form action="" method="POST" autocomplete="off">
+        {% csrf_token %}
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Subject</span>
+        </div>
+        <input type="text" class="form-control" name="subject">
+      </div>
+    
+    <div class="form-group">
+        <span class="input-group-text">Message</span>
+        <textarea class="form-control" rows="15" name="message"></textarea>
+      </div>
+      <div class="my-3">
+      <input type="submit" value="Send Email" class="btn btn-primary btn-lg btn-block" style="width:-webkit-fill-available" />
+      </div>
+    </form>
+</div>
+
+{% endblock compose_email %}

@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image as pilimg
 import uuid
+import datetime
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -39,7 +40,7 @@ class Project(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="project_owner")
     created_date = models.DateField(auto_now_add=True)
     start_date = models.DateField()
-    duration = models.IntegerField()
+    duration = models.PositiveIntegerField()
     modified_date = models.DateField(auto_now=True)
     
     def __str__(self):
@@ -78,3 +79,32 @@ class Project_Invitation(models.Model):
     status = models.CharField(max_length=100, choices=invite_status, default='sent')
     created_date = models.DateField(auto_now_add=True)
     modified_date = models.DateField(auto_now=True)
+    
+
+class NotificationUser(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_date = models.DateTimeField(auto_now=True)
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    
+    def __str__(self):
+        return f"{self.user} - {self.title}"
+    
+
+class Reasons(models.Model):
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    description = models.TextField()
+    
+    def __str__(self):
+        return f"{self.user} - {self.project}"
+
+class Discussions(models.Model):
+    posted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    message = models.TextField()
+    posted_on = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f"{self.posted_by} - {self.project}"
+    

@@ -126,16 +126,12 @@ def forgot_password(request):
 
 def password_reset(request , token):
     try:
-        fgp_obj = UserForgotPassword.objects.filter(forget_password_token = token).first()
-        context = {
-            'user_id' : fgp_obj.user.id
-            }
-        
         if request.method == 'POST':
             new_password = request.POST.get('new_password')
             confirm_password = request.POST.get('reconfirm_password')
-            user_id = request.POST.get('user_id')
-            
+            fgp_obj = UserForgotPassword.objects.filter(forget_password_token = token).first()
+            user_id = fgp_obj.user.id
+                        
             if user_id is  None:
                 messages.success(request, 'No user id found.')
                 return redirect(f'/password-reset/{token}/')

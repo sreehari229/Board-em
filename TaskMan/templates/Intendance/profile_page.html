@@ -72,7 +72,7 @@
                 </div>
               </div>
 
-              <form method="POST" enctype="multipart/form-data">
+              <form method="POST" enctype="multipart/form-data" autocomplete="off">
                 {% csrf_token %}
               <div class="card mb-4">
                 <div class="card-body">
@@ -108,7 +108,8 @@
                       <p class="mb-0">Bio</p>
                     </div>
                     <div class="col-sm-9">
-                      <p class="text-muted mb-0">{% render_field p_form.bio class="form-control" placeholder="Bio" %}</p>
+                      <p class="text-muted mb-0">{% render_field p_form.bio class="form-control" placeholder="Bio" id="countTextArea" %}</p>
+                      <p id="charCount">sdfsdf</p>
                     </div>
                   </div>
                   <hr>
