@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.mail import send_mail
+from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -262,12 +263,47 @@ def update_project_settings(request, project_id):
     data = {
         'project':project_obj,
         'form':project_form,
+        'all_users' : User.objects.all(),
     }
     
     if request.method == "POST":
         form = UpdateProjectForm(request.POST, instance=project_obj)
         if form.is_valid():
             form.save()
+            old_group_members = [ member.username for member in project_obj.group_members.all() ]
+            old_group_members.remove(request.user.username)
+            new_group_members = []
+            for member in User.objects.all():
+                if request.POST.get(member.username) is not None:
+                    new_group_members.append(member.username)
+            old_group_members = set(old_group_members)
+            new_group_members = set(new_group_members)
+            users_to_remove = old_group_members.difference(new_group_members)
+            users_to_add = new_group_members.difference(old_group_members)
+            print("users_to_remove " , users_to_remove)
+            print("users_to_add " , users_to_add)
+            
+            for member in users_to_remove:
+                mem = User.objects.get(username=member)
+                send_notification_db(
+                    mem, 
+                    "Removed from Project - " + project_obj.name, 
+                    "You have been removed from the project - " + project_obj.name ,
+                    )
+                project_obj.group_members.remove(mem)
+                send_notification_db(
+                    request.user, 
+                    "User has been removed from Project - " + project_obj.name, 
+                    mem.username + " has been removed from project - " + project_obj.name ,
+                    project_obj.project_id)
+            
+            for member in users_to_add:
+                mem = User.objects.get(username=member)
+                try:
+                    Project_Invitation.objects.create(project=project_obj, receiver=mem)
+                except IntegrityError as E:
+                    messages.warning(request, "Invite already sent to user!")
+                    return redirect('project-tasks',pk=project_obj.project_id)
             send_notification_db(
                 request.user, 
                 "Project settings updated - " + project_obj.name, 
