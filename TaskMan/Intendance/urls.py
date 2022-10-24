@@ -15,6 +15,7 @@ urlpatterns = [
     path('delete_task/<str:task_id>/', views.delete_task_page, name="delete-task"),
     #Related to Project
     path('create_project/', views.create_project_page, name='create-project'),
+    path('invitation_response/<str:project_id>/<str:AccRej>/', views.project_invite_response, name='invite-response'),
     path('delete_project/<str:project_id>/', views.delete_project_page, name="delete-project"),
     path('update_project_settings/<str:project_id>/', views.update_project_settings, name="update-project"),
     path('leave_project/<str:project_id>/', views.leave_project, name="leave-project"),

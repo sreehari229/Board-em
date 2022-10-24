@@ -16,7 +16,8 @@ import csv
 def acc_index_page(request):
     data = {
         'projects_data' : Project.objects.filter(group_members=request.user),
-        'notifications' : NotificationUser.objects.filter(user=request.user).order_by('-created_date').values(),   
+        'notifications' : NotificationUser.objects.filter(user=request.user).order_by('-created_date').values(),
+        'invites' : Project_Invitation.objects.filter(receiver=request.user).order_by('-modified_date'),
     }
     return render(request, 'Intendance/acc_home.html', data)
 
@@ -71,7 +72,11 @@ def create_project_page(request):
             user_id.append(int(request.POST.get(x))) if request.POST.get(x) else print("Nothing")
         for pkid in user_id:
             print(pkid)
-            pj.group_members.add(User.objects.get(id=pkid))
+            #pj.group_members.add(User.objects.get(id=pkid))
+            Project_Invitation.objects.create(
+                project=pj,
+                receiver=User.objects.get(id=pkid)
+                )
         pj.group_members.add(request.user)
         send_notification_db(
             request.user, 
@@ -370,5 +375,26 @@ def download_as_csv(request, project_id):
         writer.writerow([task.created_date, task.created_by.first_name, task.created_by.username, task.title, task.description, task.task_status, task.modified_date])
 
     response['Content-Disposition'] = 'attachment; filename="task_data.csv"'
-
     return response
+
+#Inviting users when project is created
+@login_required(login_url='login')
+def project_invite_response(request, project_id, AccRej):
+    project_obj = Project.objects.get(project_id=project_id)
+    invite = Project_Invitation.objects.get(project=project_obj, receiver=request.user)
+    if AccRej == "accepted":
+        project_obj.group_members.add(request.user)
+        invite.status = "accepted"
+        invite.save()
+        send_notification_db(
+                request.user, 
+                "New member added to the project.", 
+                request.user.username + " has been added to the project - " + project_obj.name,
+                project_obj.project_id)
+        messages.success(request, f"You have successfully joined the project {project_obj.name}")
+        return redirect('acc-page')
+    else:
+        invite.status = "rejected"
+        invite.save()
+        messages.success(request, f"You have rejected the invite of project {project_obj.name}")
+        return redirect('acc-page')

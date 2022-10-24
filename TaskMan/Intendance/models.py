@@ -74,11 +74,13 @@ class Project_Invitation(models.Model):
         ('rejected', 'Rejected'),
     )
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    sender = models.ForeignKey(User, null=False, related_name='Inviter', on_delete=models.CASCADE)
-    receiver = models.ForeignKey(User, null=False, related_name='Invitee', on_delete=models.CASCADE)
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=100, choices=invite_status, default='sent')
-    created_date = models.DateField(auto_now_add=True)
-    modified_date = models.DateField(auto_now=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f"{self.receiver} invited for {self.project}"
     
 
 class NotificationUser(models.Model):
