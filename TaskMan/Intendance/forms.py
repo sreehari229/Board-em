@@ -25,7 +25,7 @@ class CreateProjectForm(forms.ModelForm):
 class UpdateProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ['name','description','url','group_members','start_date','duration']
+        fields = ['name','description','url','start_date','duration']
 
         
 class TaskFormCRUD(forms.ModelForm):

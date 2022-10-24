@@ -1,20 +1,24 @@
 from django.conf import settings
 from django.core.mail import send_mail
+from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password
+from django.http import HttpResponse
 from .forms import *
 from .models import *
 from datetime import date
 from dateutil.relativedelta import relativedelta
+import csv
 
 @login_required(login_url='login')
 def acc_index_page(request):
     data = {
         'projects_data' : Project.objects.filter(group_members=request.user),
-        'notifications' : NotificationUser.objects.filter(user=request.user).order_by('-created_date').values(),   
+        'notifications' : NotificationUser.objects.filter(user=request.user).order_by('-created_date').values(),
+        'invites' : Project_Invitation.objects.filter(receiver=request.user).order_by('-modified_date'),
     }
     return render(request, 'Intendance/acc_home.html', data)
 
@@ -69,7 +73,11 @@ def create_project_page(request):
             user_id.append(int(request.POST.get(x))) if request.POST.get(x) else print("Nothing")
         for pkid in user_id:
             print(pkid)
-            pj.group_members.add(User.objects.get(id=pkid))
+            #pj.group_members.add(User.objects.get(id=pkid))
+            Project_Invitation.objects.create(
+                project=pj,
+                receiver=User.objects.get(id=pkid)
+                )
         pj.group_members.add(request.user)
         send_notification_db(
             request.user, 
@@ -255,12 +263,47 @@ def update_project_settings(request, project_id):
     data = {
         'project':project_obj,
         'form':project_form,
+        'all_users' : User.objects.all(),
     }
     
     if request.method == "POST":
         form = UpdateProjectForm(request.POST, instance=project_obj)
         if form.is_valid():
             form.save()
+            old_group_members = [ member.username for member in project_obj.group_members.all() ]
+            old_group_members.remove(request.user.username)
+            new_group_members = []
+            for member in User.objects.all():
+                if request.POST.get(member.username) is not None:
+                    new_group_members.append(member.username)
+            old_group_members = set(old_group_members)
+            new_group_members = set(new_group_members)
+            users_to_remove = old_group_members.difference(new_group_members)
+            users_to_add = new_group_members.difference(old_group_members)
+            print("users_to_remove " , users_to_remove)
+            print("users_to_add " , users_to_add)
+            
+            for member in users_to_remove:
+                mem = User.objects.get(username=member)
+                send_notification_db(
+                    mem, 
+                    "Removed from Project - " + project_obj.name, 
+                    "You have been removed from the project - " + project_obj.name ,
+                    )
+                project_obj.group_members.remove(mem)
+                send_notification_db(
+                    request.user, 
+                    "User has been removed from Project - " + project_obj.name, 
+                    mem.username + " has been removed from project - " + project_obj.name ,
+                    project_obj.project_id)
+            
+            for member in users_to_add:
+                mem = User.objects.get(username=member)
+                try:
+                    Project_Invitation.objects.create(project=project_obj, receiver=mem)
+                except IntegrityError as E:
+                    messages.warning(request, "Invite already sent to user!")
+                    return redirect('project-tasks',pk=project_obj.project_id)
             send_notification_db(
                 request.user, 
                 "Project settings updated - " + project_obj.name, 
@@ -353,3 +396,41 @@ def project_discussion_page(request, project_id):
         return redirect('discussion-board', project_id=project_id)
     
     return render(request, "Intendance/project_discussion.html", data)
+
+
+@login_required(login_url='login')
+def download_as_csv(request, project_id):
+    project_obj = Project.objects.get(project_id=project_id)
+    response = HttpResponse(content_type='text/csv')
+    writer = csv.writer(response)
+    writer.writerow(['Project ID', project_id])
+    writer.writerow(['Project Title', project_obj.name])
+    writer.writerow([''])
+    writer.writerow(['Created Date','Created By','Username','Title', 'Description', 'Task Status', 'Last Modified'])
+    for task in Task.objects.filter(project=project_obj):
+        writer.writerow([task.created_date, task.created_by.first_name, task.created_by.username, task.title, task.description, task.task_status, task.modified_date])
+
+    response['Content-Disposition'] = 'attachment; filename="task_data.csv"'
+    return response
+
+#Inviting users when project is created
+@login_required(login_url='login')
+def project_invite_response(request, project_id, AccRej):
+    project_obj = Project.objects.get(project_id=project_id)
+    invite = Project_Invitation.objects.get(project=project_obj, receiver=request.user)
+    if AccRej == "accepted":
+        project_obj.group_members.add(request.user)
+        invite.status = "accepted"
+        invite.save()
+        send_notification_db(
+                request.user, 
+                "New member added to the project.", 
+                request.user.username + " has been added to the project - " + project_obj.name,
+                project_obj.project_id)
+        messages.success(request, f"You have successfully joined the project {project_obj.name}")
+        return redirect('acc-page')
+    else:
+        invite.status = "rejected"
+        invite.save()
+        messages.success(request, f"You have rejected the invite of project {project_obj.name}")
+        return redirect('acc-page')
