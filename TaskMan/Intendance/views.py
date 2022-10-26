@@ -116,6 +116,8 @@ def create_task_page(request, project_id):
         title = request.POST.get('title')
         description = request.POST.get('description')
         task_status = request.POST.get('task_status')
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
         print(f"Title ---> {title}")
         print(f"Description ---> {description}")
         print(f"Task Status ---> {task_status}")
@@ -126,6 +128,8 @@ def create_task_page(request, project_id):
             description=description,
             task_status=task_status,
             created_by=request.user,
+            start_date=start_date,
+            end_date=end_date
         )
         send_notification_db(
             request.user, 
@@ -149,7 +153,9 @@ def update_task_page(request, task_id):
         title = request.POST.get('title')
         description = request.POST.get('description')
         task_status = request.POST.get('task_status')
-        Task.objects.filter(task_id=task_id).update(title=title, description=description, task_status=task_status)
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+        Task.objects.filter(task_id=task_id).update(title=title, description=description, task_status=task_status, start_date=start_date, end_date=end_date)
         send_notification_db(
             request.user, 
             "Task Updated under project - " + task.project.name, 
