@@ -22,7 +22,7 @@
         <label for="exampleFormControlInput1">Group Members</label>
         {% for foruser in users %}
         {% if foruser != request.user %}
-        <div class="form-check">
+        <div class="form-check form-switch">
           <input type="checkbox" class="form-check-input" name="{{ foruser.username }}" value="{{ foruser.id }}">
           <label class="form-check-label">{{ foruser.username }}</label>
         </div>
