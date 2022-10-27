@@ -1,6 +1,7 @@
 console.log("Hello")
 let text_max = 200;
 $('#charCount').html('0 / ' + text_max );
+$('#countTextArea').attr('maxLength', '200');
 
 $('#countTextArea').keyup(function() {
 let text_length = $('#countTextArea').val().length;
