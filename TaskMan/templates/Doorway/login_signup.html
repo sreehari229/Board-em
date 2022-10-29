@@ -1,0 +1,98 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'Doorway/CSS/signup_styles.css' %}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'Doorway/CSS/login_signup.css' %}">
+    
+    <title>Board Em</title>
+</head>
+<body>
+  <!--    Alert Messages code.  -->
+  {% if messages %}
+    {% for message in messages %}
+    <p style="color:red"> {{ message }} </p>
+    {% endfor %}
+  {% endif %}
+  <!--  End of the code -->
+  <div class="container" id="container">
+    <div class="form-container sign-up-container">
+      <form method="POST" action="{% url 'signup' %}" id="mainForm" autocomplete="off" >
+        {% csrf_token %}
+        <h1>Sign Up</h1>
+        <span>Or login if you have an account.</span>
+        <div style="display:flex;">
+          <input style="margin-right:2px" type="text" placeholder="First Name" name="firstName" id="firstNameIn" />
+          <input style="margin-left:2px" type="text" placeholder="Last Name" name="lastName" id="lastNameIn"  />
+        </div>
+        <div style="display:flex;justify-content:space-between;">
+          <p id="firstName" class="errhide user-validation-styling" style="width:-webkit-fill-available">Enter a valid First Name. Should not contain any special characters.</p>
+          <p id="lastName" class="errhide user-validation-styling" style="width:-webkit-fill-available">Enter a valid Last Name. Should not contain any special characters.</p>
+        </div>
+        <input type="email" placeholder="Email" name="email" id="emailIn" />
+        <p id="email" class="errhide user-validation-styling">Enter a valid Email ID.</p>
+        <input type="text" placeholder="Username" name="username" id="usernameIn" />
+        <p id="username" class="errhide user-validation-styling">Not a valid Username (No special Characters)</p>
+        <input type="password" placeholder="Password" name="password" id="passwordIn" />
+        <p id="password" class="errhide user-validation-styling">Enter a valid Password between 8 - 20 characters (Ex. HelloWorld$123)</p>
+        <input type="password" placeholder="Re-enter Password" name="rePassword" id="rePasswordIn" />
+        <p id="passwordmis" class="errhide user-validation-styling">Both Passwords should match</p>
+        
+        <div style="display:flex;width:300px">
+        <input type="checkbox" id="terms" style="width:fit-content;margin:5px" onchange="document.getElementById('submitBtn').disabled = !this.checked;">
+        <label for="terms"> I agree the terms and conditions.</label><br>
+        </div>
+
+        <button id="submitBtn" type="submit" disabled style="margin-top:15px">Sign Up</button>
+      </form>
+    </div>
+    <div class="form-container sign-in-container">
+      <form action="{% url 'login' %}" method="POST" autocomplete="off">
+        {% csrf_token %}
+        <h1>Sign In</h1>
+        <span>or use your account</span>
+        <input type="text" placeholder="Username" name="username" required />
+        <input type="password" placeholder="Password" name="password" required />
+        <a href="{% url 'forgot_password' %}">Forgot your password?</a>
+        <button type="submit">Sign In</button>
+      </form>
+    </div>
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h1>Welcome Back!</h1>
+          <p>Please login with your personal info - <a href="{% url 'index' %}">Board Em</a></p>
+          <button class="ghost" id="signIn">Sign In</button>
+        </div>
+        <div class="overlay-panel overlay-right">
+          <h1>Hello, Friend!</h1>
+          <p>Enter your personal details and start your journey with <a href="{% url 'index' %}">Board Em</a></p>
+          <button class="ghost" id="signUp">Sign Up</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="{% static 'Doorway/Scripts/signup_validations.js' %}"></script>
+  <script>
+    const signUpButton = document.getElementById("signUp");
+    const signInButton = document.getElementById("signIn");
+    const container = document.getElementById("container");
+
+signUpButton.addEventListener("click", () => {
+  container.classList.add("right-panel-active");
+});
+
+signInButton.addEventListener("click", () => {
+  container.classList.remove("right-panel-active");
+});
+  </script>
+  
+
+</body>
+</html>
+

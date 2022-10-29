@@ -60,6 +60,8 @@ class Task(models.Model):
     description = models.TextField(null=True, blank=True)
     task_status = models.CharField(max_length=100, choices=status_choice, default='todo')
     created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
+    start_date = models.DateField()
+    end_date = models.DateField()
     created_date = models.DateField(auto_now_add=True)
     modified_date = models.DateField(auto_now=True)
 

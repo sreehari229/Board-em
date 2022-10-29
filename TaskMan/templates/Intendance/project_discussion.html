@@ -10,12 +10,14 @@
             <form action="" method="POST" autocomplete="off">
                 {% csrf_token %}
                 <div class="input-group">
-                    <textarea class="form-control" rows="5" name="message" required></textarea>
+                    <textarea class="form-control" rows="5" name="message" id="countTextArea" required></textarea>
+                    
                     <button type="submit" class="btn btn-success">Post message</button>
                 </div>
+                <p id="charCount"></p>
             </form>
 
-            <div class="rounded my-3" style="height:500px;padding:15px;overflow-y:scroll">
+            <div class="rounded my-3" style="height:500px;padding:15px;overflow-y:auto">
                 {% for disc in discussions  %}
                 {% if disc.posted_by == request.user %}
                 <div style="display:flex;justify-content:right" class="my-2">

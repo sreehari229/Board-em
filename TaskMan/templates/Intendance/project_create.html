@@ -12,7 +12,8 @@
     </div>
     <div class="form-group">
         <label for="exampleFormControlSelect1">Description</label>
-        {% render_field form.description class="form-control" placeholder="Description" %}
+        {% render_field form.description class="form-control" placeholder="Description" id="countTextArea" %}
+        <p id="charCount"></p>
       </div>
       <div class="form-group">
         <label for="exampleFormControlInput1">Project URL</label>
@@ -22,7 +23,7 @@
         <label for="exampleFormControlInput1">Group Members</label>
         {% for foruser in users %}
         {% if foruser != request.user %}
-        <div class="form-check">
+        <div class="form-check form-switch">
           <input type="checkbox" class="form-check-input" name="{{ foruser.username }}" value="{{ foruser.id }}">
           <label class="form-check-label">{{ foruser.username }}</label>
         </div>
@@ -32,10 +33,10 @@
       </div>
       <div class="form-group">
         <label for="exampleFormControlInput1">Start Date</label>
-        {% render_field form.start_date class="form-control" placeholder="Start Date" type="date" min="2022-10-15" %}
+        {% render_field form.start_date class="form-control" placeholder="Start Date" type="date" %}
       </div>
       <div class="form-group">
-        <label for="exampleFormControlInput1">Duration</label>
+        <label for="exampleFormControlInput1">Duration (In weeks)</label>
         {% render_field form.duration class="form-control" placeholder="Duration" %}
       </div>
       

@@ -21,7 +21,8 @@
       <div class="input-group-prepend">
         <div class="input-group-text">Description</div>
       </div>
-    {% render_field form.description class="form-control" %}
+    {% render_field form.description class="form-control" id="countTextArea" %}
+    <p id="charCount"></p>
     </div>
 
     <div class="my-3">
@@ -32,6 +33,21 @@
             </div>
         </div>
     </div>
+
+    <div class="my-3">
+      <div class="input-group">
+        <div class="input-group-prepend ">
+          <div class="input-group-text">Start Date</div>
+      </div>      
+      {% render_field form.start_date class="form-control  mb-3" type="date" min=min_date max=max_date %}
+      <div class="input-group-prepend" style="margin-left:20px">
+        <div class="input-group-text">End Date</div>
+    </div>
+    {% render_field form.end_date class="form-control  mb-3" type="date" min=min_date max=max_date %}
+      </div>
+  </div>
+
+  
 
     <div>
     <input type="submit" value="Submit Task" class="btn btn-primary btn-lg btn-block" style="width:-webkit-fill-available" />

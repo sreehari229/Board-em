@@ -60,7 +60,7 @@ def signup_page(request):
             messages.info(request, f"An email has been sent to {email}, please verify your email.")
             return redirect('login')
     
-    return render(request, 'Doorway/signup.html', data)
+    return render(request, 'Doorway/login_signup.html', data)
 
 def login_page(request):
     if request.user.is_authenticated:
@@ -84,7 +84,7 @@ def login_page(request):
                 messages.error(request, "Username/Password is incorrect. Please type in the correct credentials to login.")
                 return redirect('login')
             
-        return render(request, 'Doorway/login_page.html')
+        return render(request, 'Doorway/login_signup.html')
 
 
 @login_required(login_url='login')
