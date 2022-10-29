@@ -1,3 +1,4 @@
+from xmlrpc.client import DateTime
 from django.conf import settings
 from django.core.mail import send_mail
 from django.db import IntegrityError
@@ -41,6 +42,7 @@ def profile_page(request):
     data = {
         'u_form':user_form,
         'p_form':profile_form,
+        'today':datetime.date.today(),
     }
     return render(request, 'Intendance/profile_page.html', data)
 
@@ -99,10 +101,17 @@ def project_tasks_page(request, pk):
     task_data_here = Task.objects.filter(project=pk)
     project_data_here = Project.objects.get(project_id=pk)
     project_end_date = project_data_here.start_date + relativedelta(weeks=project_data_here.duration)
+    today = datetime.date.today()
+    if task_data_here.count() != Task.objects.filter(project=pk,task_status="completed").count() and datetime.date.today() > project_end_date:
+        project_overdue = True
+    else:
+        project_overdue = False
     data = {
         'task_data' : task_data_here,
         'project_data' : project_data_here,
         'project_end_date' : project_end_date,
+        'today' : today,
+        'project_overdue' : project_overdue,
     }
     return render(request, 'Intendance/project_tasks.html', data)
 
@@ -110,6 +119,7 @@ def project_tasks_page(request, pk):
 @login_required(login_url='login')
 def create_task_page(request, project_id):
     form = TaskFormCRUD()
+    project = Project.objects.get(project_id=project_id)
     print("---------------> ",project_id)
     if request.method == "POST":
         print("Create Task -------------: ")
@@ -121,7 +131,6 @@ def create_task_page(request, project_id):
         print(f"Title ---> {title}")
         print(f"Description ---> {description}")
         print(f"Task Status ---> {task_status}")
-        project = Project.objects.get(project_id=project_id)
         task = Task.objects.create(
             project=project,
             title=title,
@@ -141,6 +150,8 @@ def create_task_page(request, project_id):
         
     data = {
         'form':form,
+        'min_date': project.start_date,
+        'max_date': project.start_date + relativedelta(weeks=project.duration)
     }
     return render(request, "Intendance/task_CRUD.html" ,data)
 
@@ -166,6 +177,8 @@ def update_task_page(request, task_id):
 
     data = {
         'form':form,
+        'min_date': task.project.start_date,
+        'max_date': task.project.start_date + relativedelta(weeks=task.project.duration)
     }
     return render(request, "Intendance/task_CRUD.html", data)
 

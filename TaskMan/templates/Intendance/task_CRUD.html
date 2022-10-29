@@ -39,11 +39,11 @@
         <div class="input-group-prepend ">
           <div class="input-group-text">Start Date</div>
       </div>      
-      {% render_field form.start_date class="form-control  mb-3" type="date" %}
+      {% render_field form.start_date class="form-control  mb-3" type="date" min=min_date max=max_date %}
       <div class="input-group-prepend" style="margin-left:20px">
         <div class="input-group-text">End Date</div>
     </div>
-    {% render_field form.end_date class="form-control  mb-3" type="date" %}
+    {% render_field form.end_date class="form-control  mb-3" type="date" min=min_date max=max_date %}
       </div>
   </div>
 
