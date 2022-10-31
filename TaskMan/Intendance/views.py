@@ -1,4 +1,5 @@
 from xmlrpc.client import DateTime
+from django.contrib.auth import logout
 from django.conf import settings
 from django.core.mail import send_mail
 from django.db import IntegrityError
@@ -453,3 +454,24 @@ def project_invite_response(request, project_id, AccRej):
         invite.save()
         messages.success(request, f"You have rejected the invite of project {project_obj.name}")
         return redirect('acc-page')
+
+
+@login_required(login_url='login')
+def delete_account(request):
+    if request.method == "POST":
+        password = request.POST.get("password")
+        if check_password(password, request.user.password):
+            print("right password")
+            user_obj = User.objects.get(username=request.user.username)
+            logout(request)
+            user_obj.delete()
+            messages.success(request, "Your account has been deleted.")
+            return redirect('index')
+
+        else:
+            messages.warning(request, "Wrong password entered. Please type the right password to delete the account.")
+            return redirect("delete-account")
+    data = {
+
+    }
+    return render(request, "Intendance/delete_account.html", data)

@@ -59,7 +59,7 @@ class Task(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     task_status = models.CharField(max_length=100, choices=status_choice, default='todo')
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     start_date = models.DateField()
     end_date = models.DateField()
     created_date = models.DateField(auto_now_add=True)
@@ -99,7 +99,7 @@ class NotificationUser(models.Model):
     
 
 class Reasons(models.Model):
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     description = models.TextField()
     
@@ -107,7 +107,7 @@ class Reasons(models.Model):
         return f"{self.user} - {self.project}"
 
 class Discussions(models.Model):
-    posted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    posted_by = models.ForeignKey(User, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     message = models.TextField()
     posted_on = models.DateTimeField(auto_now=True)

@@ -11,9 +11,9 @@
           <p class="card-text">This action cannot be undone. This will permanently delete the {{ project.name }} project, tasks, issues, comments, packages, secrets, workflow runs, and remove all collaborator associations.
             
             <br><br>
-            Please type "I agree to delete project" to confirm.
+            Please type "<span class="text-danger">I agree to delete project</span>" to confirm.
             </p>
-            <form action="" method="POST">
+            <form action="" method="POST" autocomplete="off">
                 {% csrf_token %}
             <input class="form-control form-control-lg" id="Iagreeinp" name="Iagreeinp" type="text" placeholder="I agree to delete project"><br>
           <input type="submit" id="btnSubmit" class="btn btn-danger" value="I understand the consequences, delete this project" disabled/>

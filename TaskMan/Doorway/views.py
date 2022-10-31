@@ -91,7 +91,8 @@ def login_page(request):
 @login_required(login_url='login')
 def logout_user(request):
     logout(request)
-    return redirect('login')
+    messages.success(request, "You logged out of the account")
+    return redirect('index')
 
 
 def email_verification(request, token):
