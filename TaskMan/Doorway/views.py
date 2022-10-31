@@ -20,6 +20,7 @@ def index_page(request):
 def signup_page(request):
     data = {
         'form' : UserCreationForm(),
+        'signuptrue' : True,
     }
     
     if request.user.is_authenticated:
