@@ -165,3 +165,8 @@ def password_reset(request , token):
     except Exception as e:
         print(e)
     return render(request , "Doorway/PasswordReset/change_password.html")
+
+
+
+def page_not_found_view(request, exception):
+    return render(request, '404.html', status=404)
