@@ -12,4 +12,4 @@ urlpatterns = [
     path('password-reset/<token>/' , views.password_reset , name="password-reset"),
 ]
 
-handler404 = "Doorway.views.page_not_found_view"
+# handler404 = "Doorway.views.page_not_found_view"
