@@ -18,7 +18,7 @@ import csv
 @login_required(login_url='login')
 def acc_index_page(request):
     data = {
-        'projects_data' : Project.objects.filter(group_members=request.user),
+        'projects_data' : Project.objects.filter(group_members=request.user).order_by('-created_date'),
         'notifications' : NotificationUser.objects.filter(user=request.user).order_by('-created_date').values(),
         'invites' : Project_Invitation.objects.filter(receiver=request.user).order_by('-modified_date'),
     }
