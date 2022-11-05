@@ -8,14 +8,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'Doorway/CSS/login_signup.css' %}">
-    
     <title>Board Em</title>
 </head>
 <body>
   <!--    Alert Messages code.  -->
   {% if messages %}
     {% for message in messages %}
-    <p style="color:red"> {{ message }} </p>
+    <div id="mydiv">
+      <p style="color:red"> {{ message }}
+        <span onclick="closeDivFunction()" style="margin-left:20px;cursor:pointer;color:black">X</span>
+      </p>
+    </div>
     {% endfor %}
   {% endif %}
   <!--  End of the code -->
@@ -93,6 +96,11 @@ signUpButton.addEventListener("click", () => {
 signInButton.addEventListener("click", () => {
   container.classList.remove("right-panel-active");
 });
+
+function closeDivFunction() {
+  var x = document.getElementById("mydiv");
+  x.style.display = "none";
+}
   </script>
   
 
