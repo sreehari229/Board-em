@@ -34,18 +34,32 @@
     </form>
     
     <ul class="navbar-nav nav justify-content-end pull-right" style="margin-left:15px;margin-right:15px">
-      <li class="nav-item"><a class="btn btn-danger" href="{% url 'logout' %}">
+      <li class="nav-item"><button data-bs-toggle="modal" data-bs-target="#logoutModal" class="btn btn-danger">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-closed" viewBox="0 0 16 16">
           <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z"/>
           <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z"/>
         </svg>
-        Logout</a></li>
+        Logout</button></li>
     </ul>
 
-    
+</nav>
 
-</nav> 
 
+<!-- Modal -->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure you want to log out of Board em?</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a href="{% url 'logout' %}" class="btn btn-danger">Yes, logout</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
