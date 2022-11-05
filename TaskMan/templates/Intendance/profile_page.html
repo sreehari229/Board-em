@@ -130,7 +130,9 @@
                     <div class="col-sm-3">
                       <p class="mb-0">Website</p>
                     </div>
-                    <div class="col-sm-9">
+                    <div class="col-sm-9" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    data-bs-title="Should be of the form http://example.com">
                       <p class="text-muted mb-0">{% render_field p_form.website_link class="form-control" placeholder="URL for Website" %}</p>
                     </div>
                   </div>
@@ -139,7 +141,9 @@
                     <div class="col-sm-3">
                       <p class="mb-0">Github</p>
                     </div>
-                    <div class="col-sm-9">
+                    <div class="col-sm-9" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    data-bs-title="Should be of the form http://example.com">
                       <p class="text-muted mb-0">{% render_field p_form.github_link class="form-control" placeholder="URL for Github" %}</p>
                     </div>
                   </div>

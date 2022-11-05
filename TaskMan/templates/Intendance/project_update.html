@@ -10,9 +10,8 @@
       <h5 class="mb-0 mt-5">Project ID:</h5>
         <p>{{ project.project_id }}</p>
       <hr>
-      <form action="" method="POST">
+      <form action="" method="POST" autocomplete="off">
         {% csrf_token %}
-        {% comment %} {{ form.as_p }} {% endcomment %}
         <div class="form-group">
           <label for="fullName">Project Name</label>
           {% render_field form.name class="form-control" placeholder="Name" %}

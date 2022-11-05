@@ -22,8 +22,8 @@
           </h5><br>
           <h5><strong>Description</strong></h5>
           <h6>{{ tskdt.description }}</h6><br>
-          <h6>Task Created By : @{{ tskdt.created_by }}</h6>
-          <h6>Project Owner : @{{ tskdt.project.created_by }}</h6><br>
+          <h6>Task Created By : <a href="{% url 'searched-profile' tskdt.created_by.username %}" style="text-decoration:none" > @{{ tskdt.created_by }}</a></h6>
+          <h6>Project Owner : <a href="{% url 'searched-profile' tskdt.project.created_by.username %}" style="text-decoration:none" >@{{ tskdt.project.created_by }}</a></h6><br>
           <h6><strong>Start Date:</strong> {{ tskdt.start_date }}</h6>
           <h6><strong>End Date:</strong> {{ tskdt.end_date }}</h6>
           <h6><strong>Task Created Date:</strong> {{ tskdt.created_date }}</h6>
@@ -74,7 +74,7 @@
         <dd class="col-sm-9">{{ project_data.created_date }}</dd>
       
         <dt class="col-sm-3 text-truncate">Project Owner</dt>
-        <dd class="col-sm-9">@{{ project_data.created_by }}</dd>
+        <dd class="col-sm-9"><a href="{% url 'searched-profile' project_data.created_by.username %}" style="text-decoration:none" >@{{ project_data.created_by }}</a></dd>
 
         <dt class="col-sm-3 text-truncate">Project ID</dt>
         <dd class="col-sm-9">{{ project_data.project_id }}</dd>
@@ -128,7 +128,9 @@
   
     <div id="boardem" class="row bg-light rounded border border-secondary" style="overflow-y: auto;height: 600px;">
       <div style="display:flex;justify-content:center;align-items:center">
-        <a style="width:600px;margin-top:15px" class="btn btn-secondary" href="{% url 'create-task' project_data.project_id %}">
+        <a style="width:600px;margin-top:15px" class="btn btn-secondary" href="{% url 'create-task' project_data.project_id %}" data-bs-toggle="tooltip" data-bs-placement="top"
+        data-bs-custom-class="custom-tooltip"
+        data-bs-title="Click on this button to create a task under the current selected project.">
           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
           </svg> Add Task
