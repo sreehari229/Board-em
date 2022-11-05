@@ -19,7 +19,7 @@
     {% endfor %}
   {% endif %}
   <!--  End of the code -->
-  <div class="container" id="container">
+  <div class="container {% if signuptrue %} right-panel-active {% endif %}" id="container">
     <div class="form-container sign-up-container">
       <form method="POST" action="{% url 'signup' %}" id="mainForm" autocomplete="off" >
         {% csrf_token %}

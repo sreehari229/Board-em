@@ -39,11 +39,11 @@
         <div class="input-group-prepend ">
           <div class="input-group-text">Start Date</div>
       </div>      
-      {% render_field form.start_date class="form-control  mb-3" type="date" min=min_date max=max_date %}
+      {% render_field form.start_date class="form-control  mb-3" type="date" min=min_date max=max_date onchange="handler(event);" %}
       <div class="input-group-prepend" style="margin-left:20px">
         <div class="input-group-text">End Date</div>
     </div>
-    {% render_field form.end_date class="form-control  mb-3" type="date" min=min_date max=max_date %}
+    {% render_field form.end_date class="form-control  mb-3" type="date" min=min_date max=max_date onchange="handler(event);" %}
       </div>
   </div>
 
@@ -54,5 +54,17 @@
     </div>
 </form>
 </div>
+
+<script>
+  function handler(e){
+  
+    var stdate = document.getElementById("id_start_date");
+    var edobj = document.getElementById("id_end_date");
+    
+      stdate.max = edobj.value;
+      edobj.min = stdate.value;
+  }
+  
+</script>
 
 {% endblock CRUD_task_content %}

@@ -3,6 +3,7 @@
 
 {% block search_user_list %}
 <br>
+{% if profiles|length > 0 %}
 {% for userprofile in profiles %}
 
 
@@ -38,6 +39,14 @@
     </div>
   <br>
 {% endfor %}
-
+{% else %}
+<div class="container h-100">
+  <div class="row h-100 justify-content-center align-items-center">
+    <form class="col-12">
+      <h3  class="text-center">No user found.</h3>
+    </form>   
+  </div>
+</div>
+{% endif %}
     
 {% endblock search_user_list %}

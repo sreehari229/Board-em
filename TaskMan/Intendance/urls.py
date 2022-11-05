@@ -5,6 +5,7 @@ urlpatterns = [
     path('', views.acc_index_page, name='acc-page'),
     path('profile/', views.profile_page, name='profile'),
     path('change_password/', views.change_password, name="change-password"),
+    path('delete_account/', views.delete_account, name="delete-account"),
     path('project_task/<str:pk>/', views.project_tasks_page, name="project-tasks"),
     path('search_user/', views.search_user, name="search-user"),
     path('searched_profile/<str:username>/', views.searched_profile, name="searched-profile"),

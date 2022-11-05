@@ -20,6 +20,7 @@ def index_page(request):
 def signup_page(request):
     data = {
         'form' : UserCreationForm(),
+        'signuptrue' : True,
     }
     
     if request.user.is_authenticated:
@@ -90,7 +91,8 @@ def login_page(request):
 @login_required(login_url='login')
 def logout_user(request):
     logout(request)
-    return redirect('login')
+    messages.success(request, "You logged out of the account")
+    return redirect('index')
 
 
 def email_verification(request, token):
@@ -163,3 +165,8 @@ def password_reset(request , token):
     except Exception as e:
         print(e)
     return render(request , "Doorway/PasswordReset/change_password.html")
+
+
+
+# def page_not_found_view(request, exception):
+#     return render(request, '404.html', status=404)

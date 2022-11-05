@@ -1,0 +1,30 @@
+{% extends 'Intendance/base_layout.html' %}
+{% load static %}
+
+{% block delete_account_form %}
+<div class="container h-100 mt-5">
+    <div class="row h-100 justify-content-center align-items-center">
+      
+<div class="card text-center" style="width: 600px;">
+    <div class="card-header h5 text-white bg-secondary">Delete your Board Em account</div>
+    <div class="card-body px-5">
+        <p class="card-text py-2">
+            You can delete your Board Em Account at any time. If you change your mind, you might not be able to recover it.
+            <br>
+            You'll lose all the data and content in that account, like emails, projects, tasks, and related information.
+        </p>
+        <form action="" method="POST" autocomplete="off">
+        {% csrf_token %}
+            <div class="form-outline">
+            <input type="password" name="password" class="form-control my-3" placeholder="Enter password" required />
+            
+        </div>
+        <button type="submit" class="btn btn-danger w-100">I agree the consequences, delete this account!</button>
+        </form>
+    </div>
+</div>
+</div>
+</div>
+
+
+{% endblock delete_account_form %}
