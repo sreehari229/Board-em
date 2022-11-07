@@ -21,17 +21,25 @@
         data-bs-title="Should be of the form http://example.com">Project URL</label>
         {% render_field form.url class="form-control" placeholder="Project URL" %}
       </div>
+      <br>
       <div class="form-group" style="height:150px;overflow-y: scroll;">
         <label for="exampleFormControlInput1">Group Members</label>
+        <input type="text" id="keyword" class="form-control" style="display:inline; width:300px; margin-left:35px;margin-top:5px;" placeholder="Search User">
+        <div class="userslist">
+          <ul style="list-style-type: none;">
         {% for foruser in users %}
         {% if foruser != request.user %}
+        <li>
         <div class="form-check form-switch">
+          <label class="form-check-label">
           <input type="checkbox" class="form-check-input" name="{{ foruser.username }}" value="{{ foruser.id }}">
-          <label class="form-check-label">{{ foruser.username }}</label>
-        </div>
+          {{ foruser.username }}</label>
+          </div>
+      </li>
         {% endif %}
         {% endfor %}
-        
+      </ul>
+      </div>
       </div>
       <div class="form-group">
         <label for="exampleFormControlInput1">Start Date</label>
@@ -48,5 +56,22 @@
       
   </form>
 </div>
+
+<script>
+  (function($){
+$("#keyword").on('keyup', function(e) {
+  var $this = $(this);
+  var exp = new RegExp($this.val(), 'i');
+  $(".userslist li label").each(function() {
+    var $self = $(this);
+    if(!exp.test($self.text())) {
+      $self.parent().parent().hide();
+    } else {
+      $self.parent().parent().show();
+    }
+  });
+});
+})(jQuery);
+</script>
 
 {% endblock create_project_content %}
