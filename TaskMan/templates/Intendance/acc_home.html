@@ -104,7 +104,7 @@
           </button>
         </h2>
         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-          <div class="accordion-body" style="max-height:400px;overflow-y:auto;">
+          <div class="accordion-body" style="max-height:450px;overflow-y:auto;">
             {% for invite in invites %}
               <h6 class="card-title"><b>{{ invite.project.name }}</b></h6>
               <p class="text-secondary my-0">{{ invite.created_date }}</p>
@@ -136,7 +136,7 @@
           </button>
         </h2>
         <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-          <div class="accordion-body" style="max-height:400px;overflow-y:auto;">
+          <div class="accordion-body" style="max-height:450px;overflow-y:auto;">
             {% for notification in notifications %}
               <h6 class="card-title"><b>{{ notification.title }}</b></h6>
               <p class="text-secondary my-0">{{ notification.created_date }}</p>

@@ -22,10 +22,10 @@
         <label for="urlforproject" class="text-muted">Project URL (Should be of form http://example.com )</label>
       </div>
       <br>
-      <div class="form-group" style="height:150px;overflow-y: scroll;">
+      <div class="form-group">
         <label for="exampleFormControlInput1">Group Members</label>
         <input type="text" id="keyword" class="form-control" style="display:inline; width:300px; margin-left:35px;margin-top:5px;" placeholder="Search User">
-        <div class="userslist">
+        <div class="userslist" style="max-height:200px;overflow-y: scroll;">
           <ul style="list-style-type: none;">
         {% for foruser in users %}
         {% if foruser != request.user %}
