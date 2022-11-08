@@ -1,3 +1,4 @@
+{% load static %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a style="margin-left:15px;margin-right:15px" class="navbar-brand" href="{% url 'acc-page' %}" >
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-motherboard-fill" viewBox="0 0 16 16">
@@ -40,7 +41,7 @@
 
     <form class="d-flex" role="search" action="{% url 'search-user' %}" method="POST">
       {% csrf_token %}
-      <input class="form-control me-2" type="search" placeholder="Username" aria-label="Search" name="username" autocomplete="off">
+      <input class="form-control me-2" type="search" placeholder="Username" aria-label="Search" name="username" autocomplete="off" style="border-radius:25px;">
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
     
@@ -61,8 +62,12 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure you want to log out of Board em?</h1>
+        <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">Are you sure you want to log out?</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body d-flex justify-content-center">
+        <img src="{% static 'images/motherboard.svg' %}" width=70px height=70px>
+        <h1 class="mx-2"><b>Board Em</b></h1>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

@@ -15,21 +15,20 @@
         <br>
         <div class="form-floating">
           {% render_field form.name class="form-control" placeholder="Name" %}
-          <label for="projectname" class="text-muted">Project Name</label>
+          <label for="projectname" class="text-muted">Project Name:</label>
           
         </div>
         <br>
         <div class="form-floating">
           {% render_field form.description class="form-control" placeholder="Description" id="countTextArea" style="height:200px" %}
-          <label for="countTextArea" class="text-muted">Description</label>
-          <p id="charCount"></p>
+          <label for="countTextArea" class="text-muted">Description:</label>
+          <small id="charCount" class="text-muted"></small>
         </div>
-        <div class="form-floating">
-          
+        <br>
+        <div class="form-floating">  
           {% render_field form.url class="form-control" placeholder="URL" %}
-          <label for="url" class="text-muted">URL (should be of the form https://example.com)</label>
+          <label for="url" class="text-muted">URL (should be of the form https://example.com):</label>
         </div>
-
         <br>
         <div class="form-group" >
           <label for="exampleFormControlInput1">Add or Remove Group Members</label>
@@ -60,12 +59,12 @@
           <div class="form-floating">
             
             {% render_field form.start_date class="form-control" type="date" %}
-            <label for="start_date" class="text-muted">Start Date</label>
+            <label for="start_date" class="text-muted">Start Date:</label>
           </div>
           <br>
         <div class="form-floating">
           {% render_field form.duration class="form-control" %}
-          <label for="duration" class="text-muted">Duration (In weeks)</label>
+          <label for="duration" class="text-muted">Duration (In weeks):</label>
         </div>
         <br>
         <button type="submit" class="btn btn-primary btn-lg btn-block" style="width:500px">Update Project Settings</button>

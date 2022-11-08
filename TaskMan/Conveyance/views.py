@@ -44,3 +44,14 @@ def get_tasks(request, project_id):
     tasks_obj = Task.objects.filter(project=project_obj)
     serializer = TaskSerializer(tasks_obj, many=True)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+def create_task(request):
+    if request.method == "POST":
+        serializer = TaskSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
