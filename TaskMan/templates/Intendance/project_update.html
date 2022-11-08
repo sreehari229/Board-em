@@ -12,19 +12,22 @@
       <hr>
       <form action="" method="POST" autocomplete="off">
         {% csrf_token %}
-        <div class="form-group">
-          <label for="fullName">Project Name</label>
+        <br>
+        <div class="form-floating">
           {% render_field form.name class="form-control" placeholder="Name" %}
-          <small id="fullNameHelp" class="form-text text-muted">Your name may appear around here where you are mentioned. You can change or remove it at any time.</small>
+          <label for="projectname" class="text-muted">Project Name</label>
+          
         </div>
-        <div class="form-group">
-          <label for="bio">Description</label>
-          {% render_field form.description class="form-control" placeholder="Description" id="countTextArea" %}
+        <br>
+        <div class="form-floating">
+          {% render_field form.description class="form-control" placeholder="Description" id="countTextArea" style="height:200px" %}
+          <label for="countTextArea" class="text-muted">Description</label>
           <p id="charCount"></p>
         </div>
-        <div class="form-group">
-          <label for="url">URL</label>
+        <div class="form-floating">
+          
           {% render_field form.url class="form-control" placeholder="URL" %}
+          <label for="url" class="text-muted">URL (should be of the form https://example.com)</label>
         </div>
 
         <br>
@@ -53,17 +56,16 @@
             </ul>
           </div>
         </div>
-          <div class="form-group">
-            <label>Start Date</label>
+        <br>
+          <div class="form-floating">
+            
             {% render_field form.start_date class="form-control" type="date" %}
+            <label for="start_date" class="text-muted">Start Date</label>
           </div>
-          
-        <div class="form-group">
-          <label for="location">Duration</label>
-          <div class="form-group small text-muted">
-            In Weeks
-          </div>
+          <br>
+        <div class="form-floating">
           {% render_field form.duration class="form-control" %}
+          <label for="duration" class="text-muted">Duration (In weeks)</label>
         </div>
         <br>
         <button type="submit" class="btn btn-primary btn-lg btn-block" style="width:500px">Update Project Settings</button>

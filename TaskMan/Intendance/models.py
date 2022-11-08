@@ -114,4 +114,13 @@ class Discussions(models.Model):
     
     def __str__(self):
         return f"{self.posted_by} - {self.project}"
-    
+
+
+class AdminMessages(models.Model):
+    subject = models.CharField(max_length=200)
+    message = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user} - {self.subject}"

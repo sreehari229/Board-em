@@ -1,0 +1,32 @@
+{% extends 'Intendance/base_layout.html' %}
+{% load static %}
+
+{% block support_send_message %}
+
+<div class="" style="display:flex;justify-content:center;margin-left:10%;margin-right:10%">
+<div class="card-body" style="width:800px;">
+    <h5 class="card-title">Support Request</h5>
+    <form class="row g-3" method="POST" action="" autocomplete="off">
+        {% csrf_token %}
+        <div class="col-md-12">
+            <div class="form-floating"> 
+                <input type="text" class="form-control" id="floatingName" name="subject" placeholder="Your Name" maxlength="199" required> 
+                <label for="floatingName">Subject</label>
+            </div>
+        </div>
+    <div class="col-12">
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Address" name="message" id="floatingTextarea" style="height:300px;" required></textarea>
+            <label for="floatingTextarea">Message</label>
+        </div>
+    </div>
+    <p class="text-danger">** Admin will receive messages and get back to you with a solution via the registered Email. Usually takes upto 2-3 days to resolve the issue. Please constantly check your email for further communications.</p>
+    <div class="text-center"> 
+        <button type="submit" class="btn btn-primary" style="width:600px">Send message to Admin - Board Em</button> 
+    </div>
+    </form>
+</div>
+</div>
+
+
+{% endblock support_send_message %}

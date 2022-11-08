@@ -10,6 +10,7 @@ urlpatterns = [
     path('search_user/', views.search_user, name="search-user"),
     path('searched_profile/<str:username>/', views.searched_profile, name="searched-profile"),
     path('group_email/<str:project_id>/', views.compose_group_email, name="group-email"),
+    path('support/', views.send_message_admin, name='support'),
     #Related to Tasks
     path('create_task/<str:project_id>/', views.create_task_page, name='create-task'),
     path('update_task/<str:task_id>/', views.update_task_page, name="update-task"),

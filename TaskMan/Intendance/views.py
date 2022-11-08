@@ -475,3 +475,19 @@ def delete_account(request):
 
     }
     return render(request, "Intendance/delete_account.html", data)
+
+
+@login_required(login_url='login')
+def send_message_admin(request):
+    if request.method == "POST":
+        subject = request.POST.get("subject")
+        message = request.POST.get("message")
+        AdminMessages.objects.create(subject=subject, message=message, user=request.user)
+        send_notification_db(
+                request.user, 
+                "Message sent to Admin", 
+                "You sent a message to the admin. Subject" + subject,
+                )
+        messages.success(request, "Message sent to Admin Board em.")
+        return redirect('support')
+    return render(request, "Intendance/support_sendmsg.html")

@@ -6,20 +6,20 @@
 <div class="container-sm" style="width:900px">
 <form action="" method="POST" autocomplete="off">
     {% csrf_token %}
-    <div class="form-group">
-      <label for="exampleFormControlInput1">Name</label>
+    <br>
+    <div class="form-floating">
       {% render_field form.name class="form-control" placeholder="Name" %}
+      <label for="floatingName" class="text-muted">Project Name</label>
     </div>
-    <div class="form-group">
-        <label for="exampleFormControlSelect1">Description</label>
-        {% render_field form.description class="form-control" placeholder="Description" id="countTextArea" %}
+    <br>
+    <div class="form-floating">
+        {% render_field form.description class="form-control" placeholder="Description" id="countTextArea" style="height:200px" %}
+        <label for="countTextArea" class="text-muted">Description</label>
         <p id="charCount"></p>
       </div>
-      <div class="form-group">
-        <label for="exampleFormControlInput1" data-bs-toggle="tooltip" data-bs-placement="top"
-        data-bs-custom-class="custom-tooltip"
-        data-bs-title="Should be of the form http://example.com">Project URL</label>
+      <div class="form-floating">
         {% render_field form.url class="form-control" placeholder="Project URL" %}
+        <label for="urlforproject" class="text-muted">Project URL (Should be of form http://example.com )</label>
       </div>
       <br>
       <div class="form-group" style="height:150px;overflow-y: scroll;">
@@ -41,13 +41,15 @@
       </ul>
       </div>
       </div>
-      <div class="form-group">
-        <label for="exampleFormControlInput1">Start Date</label>
+      <br>
+      <div class="form-floating">
         {% render_field form.start_date class="form-control" placeholder="Start Date" type="date" %}
+        <label for="startdate" class="text-muted">Start Date</label>
       </div>
-      <div class="form-group">
-        <label for="exampleFormControlInput1">Duration (In weeks)</label>
-        {% render_field form.duration class="form-control" placeholder="Duration" %}
+      <br>
+      <div class="form-floating">
+        {% render_field form.duration class="form-control" placeholder="Duration" maxlength=500 %}
+        <label for="duration" class="text-muted">Duration (In weeks)</label>
       </div>
       
       <br>
