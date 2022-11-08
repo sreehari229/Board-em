@@ -5,7 +5,9 @@
 
 <div class="" style="display:flex;justify-content:center;margin-left:10%;margin-right:10%">
 <div class="card-body" style="width:800px;">
-    <h5 class="card-title">Support Request</h5>
+    <h5 class="card-title">Get in touch with the Admin of Board Em</h5>
+    <small class="text-danger">** Admin will receive messages and get back to you with a solution via the registered Email. Usually takes upto 2-3 days to resolve the issue. Please constantly check your email for further communications.</small>
+    <br><br>
     <form class="row g-3" method="POST" action="" autocomplete="off">
         {% csrf_token %}
         <div class="col-md-12">
@@ -20,7 +22,7 @@
             <label for="floatingTextarea">Message:</label>
         </div>
     </div>
-    <p class="text-danger">** Admin will receive messages and get back to you with a solution via the registered Email. Usually takes upto 2-3 days to resolve the issue. Please constantly check your email for further communications.</p>
+    
     <div class="text-center"> 
         <button type="submit" class="btn btn-primary" style="width:600px">Send message to Admin - Board Em</button> 
     </div>
