@@ -8,14 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'Doorway/CSS/login_signup.css' %}">
-    
+    <link rel="icon" href="{% static 'images/motherboard.svg' %}" type = "image/x-icon">
     <title>Board Em</title>
 </head>
 <body>
   <!--    Alert Messages code.  -->
   {% if messages %}
     {% for message in messages %}
-    <p style="color:red"> {{ message }} </p>
+    <div id="mydiv">
+      <p style="color:red"> {{ message }}
+        <span onclick="closeDivFunction()" style="margin-left:20px;cursor:pointer;color:black">X</span>
+      </p>
+    </div>
     {% endfor %}
   {% endif %}
   <!--  End of the code -->
@@ -43,8 +47,11 @@
         <p id="passwordmis" class="errhide user-validation-styling">Both Passwords should match</p>
         
         <div style="display:flex;width:300px">
-        <input type="checkbox" id="terms" style="width:fit-content;margin:5px" onchange="document.getElementById('submitBtn').disabled = !this.checked;">
-        <label for="terms"> I agree the terms and conditions.</label><br>
+        <input type="checkbox" id="terms" style="width:fit-content;margin:5px" onchange="document.getElementById('submitBtn').disabled = !this.checked;"> 
+        <div class="tooltip">I agree the terms and conditions
+          <span class="tooltiptext"> Terms and Conditions for Board em. By selecting the checkbox you agree to use this website in the right manner.</span>
+        </div><br>
+        
         </div>
 
         <button id="submitBtn" type="submit" disabled style="margin-top:15px">Sign Up</button>
@@ -90,6 +97,11 @@ signUpButton.addEventListener("click", () => {
 signInButton.addEventListener("click", () => {
   container.classList.remove("right-panel-active");
 });
+
+function closeDivFunction() {
+  var x = document.getElementById("mydiv");
+  x.style.display = "none";
+}
   </script>
   
 

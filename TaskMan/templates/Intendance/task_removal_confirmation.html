@@ -28,7 +28,7 @@
         <dd class="col-sm-9">{{ task.modified_date }}</dd>
         
       </dl>
-      <form action="" method="POST">
+      <form action="" method="POST" autocomplete="off">
         {% csrf_token %}
         <h6>This action cannot be undone</h6>
       <div class="text-danger">

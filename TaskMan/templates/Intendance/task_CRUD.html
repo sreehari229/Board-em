@@ -6,7 +6,7 @@
 
 <div class="container ml-5 mt-5 ">
   
-<form action="" method="POST">
+<form action="" method="POST" autocomplete="off">
     {% csrf_token %}
     <div class="my-3">
         <div class="input-group">
@@ -22,7 +22,7 @@
         <div class="input-group-text">Description</div>
       </div>
     {% render_field form.description class="form-control" id="countTextArea" %}
-    <p id="charCount"></p>
+    <small id="charCount" class="text-muted"></small>
     </div>
 
     <div class="my-3">

@@ -11,12 +11,13 @@
       <p class="card-text">This action cannot be undone. This will remove you from the project group.
         <form action="" method="POST" autocomplete="off">
           {% csrf_token %}
-        <div class="form-group">
-          <label>Please specify the reason for leaving the project {{ project.name }}.</label>
-          <textarea class="form-control" name="ReasonDesc" rows="5" required></textarea>
+        <div class="form-floating">
+          <textarea class="form-control" name="ReasonDesc" rows="5" id="countTextArea" style="height:150px" required></textarea>
+          <label for="countTextArea" class="text-danger">Please specify the reason for leaving the project {{ project.name }}.</label>
+          <small id="charCount" class="text-muted"></small>
         </div>
         <br><br>
-        Please type "Leave project" to confirm.
+        Please type "<span class="text-danger">Leave project</span>" to confirm.
         </p>
         
             
