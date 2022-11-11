@@ -8,3 +8,7 @@ Project Management Tool
     ------------->source .env
 3. Install dependencies from requirements.txt file
 4. Run ---> python manage.py runserver
+
+Superuser Credentials
+username : sree
+password : maximbady
