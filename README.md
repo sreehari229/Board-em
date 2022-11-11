@@ -9,6 +9,6 @@ Project Management Tool
 3. Install dependencies from requirements.txt file
 4. Run ---> python manage.py runserver
 
-Superuser Credentials
-username : sree
+Superuser Credentials <br>
+username : sree <br>
 password : maximbady
